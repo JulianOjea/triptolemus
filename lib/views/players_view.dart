@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:triptolemus/constants/colors.dart';
 
 import 'package:triptolemus/services/player_service.dart';
 import 'package:triptolemus/widgets/PlayerInput.dart';
@@ -27,6 +28,7 @@ class _PlayersViewState extends State<PlayersView> {
     final playerList = Provider.of<PlayerList>(context, listen: false);
 
     return Scaffold(
+      backgroundColor: AppColor.blue,
       body: Center(
         child: SingleChildScrollView(
           child: Column(

@@ -19,7 +19,7 @@ class PlayerInput extends StatelessWidget {
       padding: const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
       margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       decoration: BoxDecoration(
-        color: AppColor.green,
+        color: AppColor.orange,
         borderRadius: BorderRadius.circular(30),
         boxShadow: <BoxShadow>[
           BoxShadow(
