@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/services/player_service.dart';
 import 'package:triptolemus/widgets/RequestContainer.dart';
 
@@ -17,7 +18,7 @@ class _GameViewState extends State<GameView> {
     RequestContainer rc = RequestContainer();
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(110, 205, 230, 1.000),
+      backgroundColor: AppColor.blue,
       body: Center(
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),

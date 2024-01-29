@@ -63,7 +63,7 @@ class _PlayersViewState extends State<PlayersView> {
                     playerNames.removeLast();
                     playerList.resetPlayerList();
                     playerList.fillPlayerList(playerNames);
-                    Navigator.pushNamed(context, "game");
+                    Navigator.pushNamed(context, "configuration");
                   })
             ],
           ),
