@@ -17,29 +17,31 @@ class _GameViewState extends State<GameView> {
     final playerService = Provider.of<PlayerList>(context);
     RequestContainer rc = RequestContainer();
 
-    return Scaffold(
-      backgroundColor: AppColor.blue,
-      body: Center(
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                playerService.playerList[playerService.index].name
-                    .toUpperCase(),
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 70,
-                    color: Colors.white),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              rc,
-            ],
-          )),
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: AppColor.blue,
+        body: Center(
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  playerService.playerList[playerService.index].name
+                      .toUpperCase(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 70,
+                      color: Colors.white),
+                ),
+                const SizedBox(
+                  height: 100,
+                ),
+                rc,
+              ],
+            )),
+          ),
         ),
       ),
     );

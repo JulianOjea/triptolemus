@@ -59,10 +59,14 @@ class _PlayersViewState extends State<PlayersView> {
                   heroTag: "btn2",
                   child: const Icon(Icons.add_shopping_cart_sharp),
                   onPressed: () {
-                    List<String> playerNames = playerInputList
-                        .map((playerInput) => playerInput.textController.text)
+                    List<PlayerInput> playerNamesFiltered = playerInputList
+                        .where((playerInput) =>
+                            playerInput.textController.text.isNotEmpty)
                         .toList();
-                    playerNames.removeLast();
+
+                    List<String> playerNames = playerNamesFiltered
+                        .map((e) => e.textController.text)
+                        .toList();
                     playerList.resetPlayerList();
                     playerList.fillPlayerList(playerNames);
                     Navigator.pushNamed(context, "configuration");

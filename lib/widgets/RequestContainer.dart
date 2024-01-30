@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:triptolemus/data/questions.dart';
+import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/services/player_service.dart';
+import 'package:triptolemus/services/questions_service.dart';
 
 class RequestContainer extends StatefulWidget {
   const RequestContainer({
@@ -23,7 +24,7 @@ class _RequestContainerState extends State<RequestContainer>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
 
     _animation = Tween<double>(begin: 300.0, end: 0).animate(_controller);
@@ -43,6 +44,7 @@ class _RequestContainerState extends State<RequestContainer>
   @override
   Widget build(BuildContext context) {
     final playerService = Provider.of<PlayerList>(context);
+    final questionService = Provider.of<QuestionService>(context);
 
     return Column(
       children: [
@@ -51,15 +53,17 @@ class _RequestContainerState extends State<RequestContainer>
           builder: (context, child) {
             return Container(
               decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: AppColor.orange,
                   borderRadius: BorderRadius.circular(20.0)),
               width: _animation.value,
               height: _animation.value,
               child: Center(
                 child: Text(
                   textAlign: TextAlign.center,
-                  Questions.getQuestion(
-                      playerService.getRandomPlayerWithoutActual().name),
+                  questionService
+                      .getQuestion(
+                          playerService.getRandomPlayerWithoutActual().name)
+                      .text,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 30,
