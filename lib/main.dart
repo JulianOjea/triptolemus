@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:triptolemus/routes/routes.dart';
-import 'package:triptolemus/services/player_service.dart';
-import 'package:triptolemus/services/questions_service.dart';
+import 'package:get/route_manager.dart';
+import 'package:triptolemus/views/configuration_view.dart';
+import 'package:triptolemus/views/game_view.dart';
+import 'package:triptolemus/views/players_view.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,17 +13,24 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => PlayerList()),
-        ChangeNotifierProvider(create: (_) => QuestionService())
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Chat App',
+      initialRoute: 'players',
+      getPages: [
+        GetPage(
+          name: '/players',
+          page: () => const PlayersView(),
+        ),
+        GetPage(
+          name: '/game',
+          page: () => const GameView(),
+        ),
+        GetPage(
+          name: '/configuration',
+          page: () => const ConfigurationView(),
+        )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Chat App',
-        initialRoute: 'players',
-        routes: appRoutes,
-      ),
     );
   }
 }

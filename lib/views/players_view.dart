@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
+import 'package:triptolemus/controllers/player_controller.dart';
 
-import 'package:triptolemus/services/player_service.dart';
-import 'package:triptolemus/widgets/PlayerInput.dart';
+import 'package:triptolemus/widgets/player_input.dart';
 
 class PlayersView extends StatefulWidget {
   const PlayersView({super.key});
@@ -25,7 +25,7 @@ class _PlayersViewState extends State<PlayersView> {
 
   @override
   Widget build(BuildContext context) {
-    final playerList = Provider.of<PlayerList>(context, listen: false);
+    final playerCtrl = Get.put(PlayerController());
 
     return Scaffold(
       backgroundColor: AppColor.blue,
@@ -67,9 +67,9 @@ class _PlayersViewState extends State<PlayersView> {
                     List<String> playerNames = playerNamesFiltered
                         .map((e) => e.textController.text)
                         .toList();
-                    playerList.resetPlayerList();
-                    playerList.fillPlayerList(playerNames);
-                    Navigator.pushNamed(context, "configuration");
+                    playerCtrl.resetPlayerList();
+                    playerCtrl.fillPlayerList(playerNames);
+                    Get.toNamed('/configuration');
                   })
             ],
           ),

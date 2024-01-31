@@ -1,16 +1,20 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:triptolemus/data/questions.dart';
 import 'package:triptolemus/models/category.dart';
 import 'package:triptolemus/models/question.dart';
 
-class QuestionService with ChangeNotifier {
-  final List<QuestionCategory> _activeCategory = [];
+class QuestionController extends GetxController {
+  var categories = [
+    QuestionCategory(QuestionCategory.dilemas, true),
+    QuestionCategory(QuestionCategory.personalizada, false),
+    QuestionCategory(QuestionCategory.picante, false),
+    QuestionCategory(QuestionCategory.confidenciales, false),
+  ].obs;
 
   Question getQuestion(String name) {
-    print("hola :'D");
-    _activeCategory.map((e) => print(e.value));
+    categories.map((e) => print(e.value));
     final random = Random();
     Question question =
         Questions.questionList[random.nextInt(Questions.questionList.length)];
@@ -20,6 +24,11 @@ class QuestionService with ChangeNotifier {
   }
 
   void addActiveCategory(QuestionCategory category) {
-    _activeCategory.add(category);
+    categories.add(category);
+  }
+
+  bool isActive(String cat) {
+    //TODO
+    return true;
   }
 }

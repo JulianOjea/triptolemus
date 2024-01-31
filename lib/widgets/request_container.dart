@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:triptolemus/constants/colors.dart';
-import 'package:triptolemus/services/player_service.dart';
-import 'package:triptolemus/services/questions_service.dart';
+import 'package:triptolemus/controllers/player_controller.dart';
+import 'package:triptolemus/controllers/questions_controller.dart';
 
 class RequestContainer extends StatefulWidget {
   const RequestContainer({
@@ -43,8 +44,8 @@ class _RequestContainerState extends State<RequestContainer>
 
   @override
   Widget build(BuildContext context) {
-    final playerService = Provider.of<PlayerList>(context);
-    final questionService = Provider.of<QuestionService>(context);
+    final playerCrtl = Get.find<PlayerController>();
+    final questionCrtl = Get.find<QuestionController>();
 
     return Column(
       children: [
@@ -60,9 +61,9 @@ class _RequestContainerState extends State<RequestContainer>
               child: Center(
                 child: Text(
                   textAlign: TextAlign.center,
-                  questionService
+                  questionCrtl
                       .getQuestion(
-                          playerService.getRandomPlayerWithoutActual().name)
+                          playerCrtl.getRandomPlayerWithoutActual().name)
                       .text,
                   style: const TextStyle(
                       color: Colors.white,
@@ -79,8 +80,10 @@ class _RequestContainerState extends State<RequestContainer>
         FloatingActionButton(
             child: const Icon(Icons.add_road),
             onPressed: () {
-              playerService.nextPlayer();
+              playerCrtl.nextPlayer();
               _controller.forward();
+
+              setState(() {});
             })
       ],
     );

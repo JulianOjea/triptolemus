@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
-import 'package:triptolemus/services/player_service.dart';
-import 'package:triptolemus/widgets/RequestContainer.dart';
+import 'package:triptolemus/controllers/player_controller.dart';
+import 'package:triptolemus/widgets/request_container.dart';
 
 class GameView extends StatefulWidget {
   const GameView({super.key});
@@ -12,9 +12,10 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
+  final playerCtrl = Get.find<PlayerController>();
+
   @override
   Widget build(BuildContext context) {
-    final playerService = Provider.of<PlayerList>(context);
     RequestContainer rc = RequestContainer();
 
     return MaterialApp(
@@ -27,13 +28,14 @@ class _GameViewState extends State<GameView> {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  playerService.playerList[playerService.index].name
-                      .toUpperCase(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 70,
-                      color: Colors.white),
+                Obx(
+                  () => Text(
+                      playerCtrl.playerList[playerCtrl.index.value].name
+                          .toUpperCase(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 70,
+                          color: Colors.white)),
                 ),
                 const SizedBox(
                   height: 100,
