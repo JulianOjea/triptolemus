@@ -27,8 +27,13 @@ class QuestionController extends GetxController {
     categories.add(category);
   }
 
-  bool isActive(String cat) {
-    //TODO
-    return true;
+  QuestionCategory getCategoryByName(String cat) {
+    return categories.firstWhere((qcat) => qcat.value == cat);
+  }
+
+  void swichActive(QuestionCategory cat) {
+    QuestionCategory qc = getCategoryByName(cat.value);
+    qc.isActive = !qc.isActive;
+    categories.refresh();
   }
 }

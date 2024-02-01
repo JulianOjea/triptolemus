@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,14 +22,14 @@ class CategorySelector extends StatelessWidget {
 
     return GestureDetector(
         onTap: () {
-          category.isActive = false;
+          questionCtrl.swichActive(category);
         },
         child: Obx(
           () => Container(
             height: 40,
             width: 150,
             decoration: BoxDecoration(
-              color: questionCtrl.categories[1].isActive
+              color: questionCtrl.getCategoryByName(category.value).isActive
                   ? AppColor.red
                   : AppColor.orange,
               borderRadius: BorderRadius.circular(30),
