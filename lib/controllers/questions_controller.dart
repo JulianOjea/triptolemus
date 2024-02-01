@@ -13,14 +13,27 @@ class QuestionController extends GetxController {
     QuestionCategory(QuestionCategory.confidenciales, false),
   ].obs;
 
-  Question getQuestion(String name) {
-    categories.map((e) => print(e.value));
+  var activeQuestions = [].obs;
+
+  String getQuestionString(String name) {
     final random = Random();
-    Question question =
-        Questions.questionList[random.nextInt(Questions.questionList.length)];
-    question.text.replaceAll("%name%", name);
-    return Question(
-        question.text.replaceAll("%name%", name), question.category);
+    Question question = activeQuestions[random.nextInt(activeQuestions.length)];
+    return question.text.replaceAll("%name%", name);
+  }
+
+  void setActiveQuestionsList() {
+    activeQuestions.clear();
+
+    categories.where((qc) => qc.isActive).forEach((element) {
+      activeQuestions.addAll(getQuestionsByCategory(element));
+    });
+    activeQuestions.refresh();
+  }
+
+  List<Question> getQuestionsByCategory(QuestionCategory qc) {
+    return Questions.questionList
+        .where((element) => element.category == qc.value)
+        .toList();
   }
 
   void addActiveCategory(QuestionCategory category) {

@@ -108,6 +108,7 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                 //     .map((e) => e.category)
                 //     .toList();
                 // categoryList.map((e) => questionCtrl.addActiveCategory(e));
+                questionCtrl.setActiveQuestionsList();
                 Navigator.pushNamed(context, "game");
               },
               child: const Icon(Icons.abc),

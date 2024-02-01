@@ -61,10 +61,8 @@ class _RequestContainerState extends State<RequestContainer>
               child: Center(
                 child: Text(
                   textAlign: TextAlign.center,
-                  questionCrtl
-                      .getQuestion(
-                          playerCrtl.getRandomPlayerWithoutActual().name)
-                      .text,
+                  questionCrtl.getQuestionString(
+                      playerCrtl.getRandomPlayerWithoutActual().name),
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 30,
