@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
 
-import 'package:triptolemus/widgets/player_input.dart';
+import 'package:triptolemus/widgets/main_input_text.dart';
 
 class PlayersView extends StatefulWidget {
   const PlayersView({super.key});
@@ -13,12 +13,13 @@ class PlayersView extends StatefulWidget {
 }
 
 class _PlayersViewState extends State<PlayersView> {
-  List<PlayerInput> playerInputList = [];
+  List<MainInputText> playerInputList = [];
 
   @override
   void initState() {
-    playerInputList.add(PlayerInput(
+    playerInputList.add(MainInputText(
       textController: TextEditingController(),
+      hintText: 'Escribe un nombre',
     ));
     super.initState();
   }
@@ -46,9 +47,9 @@ class _PlayersViewState extends State<PlayersView> {
                   child: const Icon(Icons.accessible_forward_rounded),
                   onPressed: () {
                     if (playerInputList.last.textController.text.isNotEmpty) {
-                      playerInputList.add(PlayerInput(
-                        textController: TextEditingController(),
-                      ));
+                      playerInputList.add(MainInputText(
+                          textController: TextEditingController(),
+                          hintText: 'Escribe un nombre'));
                     }
                     setState(() {});
                   }),
@@ -59,7 +60,7 @@ class _PlayersViewState extends State<PlayersView> {
                   heroTag: "btn2",
                   child: const Icon(Icons.add_shopping_cart_sharp),
                   onPressed: () {
-                    List<PlayerInput> playerNamesFiltered = playerInputList
+                    List<MainInputText> playerNamesFiltered = playerInputList
                         .where((playerInput) =>
                             playerInput.textController.text.isNotEmpty)
                         .toList();

@@ -1,5 +1,7 @@
+import 'dart:ffi';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/data/questions.dart';
 import 'package:triptolemus/models/category.dart';
@@ -15,6 +17,8 @@ class QuestionController extends GetxController {
 
   var activeQuestions = [].obs;
 
+  var customQuestionList = [].obs;
+
   String getQuestionString(String name) {
     final random = Random();
     Question question = activeQuestions[random.nextInt(activeQuestions.length)];
@@ -26,6 +30,9 @@ class QuestionController extends GetxController {
 
     categories.where((qc) => qc.isActive).forEach((element) {
       activeQuestions.addAll(getQuestionsByCategory(element));
+      if (element.value == QuestionCategory.personalizada) {
+        activeQuestions.addAll(customQuestionList);
+      }
     });
     activeQuestions.refresh();
   }
@@ -48,5 +55,10 @@ class QuestionController extends GetxController {
     QuestionCategory qc = getCategoryByName(cat.value);
     qc.isActive = !qc.isActive;
     categories.refresh();
+  }
+
+  void addCustomQuestion(String questionText) {
+    customQuestionList
+        .add(Question(questionText, QuestionCategory.personalizada));
   }
 }

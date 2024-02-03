@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:triptolemus/constants/colors.dart';
+import 'package:triptolemus/controllers/player_controller.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
 import 'package:triptolemus/widgets/category_selector.dart';
 
@@ -14,6 +15,7 @@ class ConfigurationView extends StatefulWidget {
 }
 
 class _ConfigurationViewState extends State<ConfigurationView> {
+  double _currentSliderValue = 5;
   // int selectedCategory = 0;
 
   // void selectCategory(int index) {
@@ -24,7 +26,8 @@ class _ConfigurationViewState extends State<ConfigurationView> {
 
   @override
   Widget build(BuildContext context) {
-    final questionCtrl = Get.put(QuestionController());
+    final questionCtrl = Get.find<QuestionController>();
+    final playerCtrl = Get.find<PlayerController>();
 
     TextEditingController textController = TextEditingController();
 
@@ -41,38 +44,51 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                   fontSize: 25,
                   fontWeight: FontWeight.bold),
             ),
+            // Container(
+            //   padding:
+            //       const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
+            //   margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+            //   decoration: BoxDecoration(
+            //     color: AppColor.orange,
+            //     borderRadius: BorderRadius.circular(30),
+            //     boxShadow: <BoxShadow>[
+            //       BoxShadow(
+            //           color: Colors.black.withOpacity(0.10),
+            //           offset: const Offset(0, 10),
+            //           blurRadius: 5),
+            //     ],
+            //   ),
+            //   child: TextField(
+            //     controller: textController,
+            //     textAlign: TextAlign.center,
+            //     style: const TextStyle(
+            //         color: Colors.black,
+            //         fontSize: 20.0,
+            //         fontWeight: FontWeight.bold),
+            //     decoration: const InputDecoration(
+            //         hintStyle: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 20.0,
+            //             fontWeight: FontWeight.bold),
+            //         focusedBorder: InputBorder.none,
+            //         border: InputBorder.none,
+            //         hintText: "1"),
+            //   ),
+            // ),
             const SizedBox(height: 25),
             Container(
-              padding:
-                  const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
-              margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-              decoration: BoxDecoration(
-                color: AppColor.orange,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.10),
-                      offset: const Offset(0, 10),
-                      blurRadius: 5),
-                ],
-              ),
-              child: TextField(
-                controller: textController,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold),
-                decoration: const InputDecoration(
-                    hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold),
-                    focusedBorder: InputBorder.none,
-                    border: InputBorder.none,
-                    hintText: "1"),
-              ),
-            ),
+                child: Slider(
+                    value: _currentSliderValue,
+                    max: 10,
+                    divisions: 10,
+                    label: _currentSliderValue.round().toString(),
+                    onChanged: (double value) {
+                      setState(() {
+                        _currentSliderValue = value;
+                        textController.text = value.toString();
+                        print(value);
+                      });
+                    })),
             const SizedBox(height: 25),
             const Center(
               child: Text(
@@ -109,6 +125,7 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                 //     .toList();
                 // categoryList.map((e) => questionCtrl.addActiveCategory(e));
                 questionCtrl.setActiveQuestionsList();
+                playerCtrl.nRounds.value = _currentSliderValue.toInt();
                 Navigator.pushNamed(context, "game");
               },
               child: const Icon(Icons.abc),

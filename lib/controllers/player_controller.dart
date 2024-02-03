@@ -6,6 +6,8 @@ import 'package:triptolemus/models/player.dart';
 class PlayerController extends GetxController {
   final playerList = <Player>[].obs;
   var index = 0.obs;
+  var actualRound = 0;
+  var nRounds = 0.obs;
 
   void addPlayer(Player player) {
     playerList.add(player);
@@ -23,7 +25,6 @@ class PlayerController extends GetxController {
 
   void nextPlayer() {
     index < playerList.length - 1 ? index.value++ : index.value = 0;
-    print("Este es el indice: ${index.value}");
   }
 
   Player getRandomPlayerWithoutActual() {
@@ -34,5 +35,14 @@ class PlayerController extends GetxController {
     Player player = tempList[random.nextInt(tempList.length)];
 
     return player;
+  }
+
+  void nextRound() {
+    if (index.value == playerList.length - 1) {
+      actualRound++;
+      if (actualRound == nRounds.value) {
+        print("Ahora se acaba el juego");
+      }
+    }
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:triptolemus/views/configuration_view.dart';
+import 'package:triptolemus/views/custom_question_view.dart';
 import 'package:triptolemus/views/game_view.dart';
+import 'package:triptolemus/views/home_page_view.dart';
 import 'package:triptolemus/views/players_view.dart';
 
 void main() {
@@ -16,7 +18,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Chat App',
-      initialRoute: 'players',
+      initialRoute: 'home_page_view',
       getPages: [
         GetPage(
           name: '/players',
@@ -29,6 +31,14 @@ class MainApp extends StatelessWidget {
         GetPage(
           name: '/configuration',
           page: () => const ConfigurationView(),
+        ),
+        GetPage(
+          name: '/custom_question',
+          page: () => const CustomQuestionView(),
+        ),
+        GetPage(
+          name: '/home_page_view',
+          page: () => const HomePageView(),
         )
       ],
     );

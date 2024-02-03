@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:triptolemus/constants/colors.dart';
 
-class PlayerInput extends StatelessWidget {
+class MainInputText extends StatelessWidget {
   final TextEditingController textController;
+  final String hintText;
 
-  const PlayerInput({
+  const MainInputText({
     Key? key,
     required this.textController,
+    required this.hintText,
   }) : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class PlayerInput extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
       margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+      height: 60.0,
       decoration: BoxDecoration(
         color: AppColor.orange,
         borderRadius: BorderRadius.circular(30),
@@ -32,10 +35,10 @@ class PlayerInput extends StatelessWidget {
         controller: textController,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
-            hintText: "Escriba un nombre"),
+            hintText: hintText),
       ),
     );
   }

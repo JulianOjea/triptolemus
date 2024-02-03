@@ -79,8 +79,8 @@ class _RequestContainerState extends State<RequestContainer>
             child: const Icon(Icons.add_road),
             onPressed: () {
               playerCrtl.nextPlayer();
+              playerCrtl.nextRound();
               _controller.forward();
-
               setState(() {});
             })
       ],
