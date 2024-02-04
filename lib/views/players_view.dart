@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:keyboard_detection/keyboard_detection.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
+import 'package:triptolemus/controllers/questions_controller.dart';
 
 import 'package:triptolemus/widgets/main_input_text.dart';
 
@@ -16,6 +17,9 @@ class PlayersView extends StatefulWidget {
 class _PlayersViewState extends State<PlayersView> {
   List<MainInputText> playerInputList = [];
   bool _iskeyboardVisible = false;
+
+  //TODO MAYBE YOU CAN DO LAZY PUT HERE
+  final questionCtrl = Get.put(QuestionController());
 
   @override
   void initState() {
@@ -80,10 +84,8 @@ class _PlayersViewState extends State<PlayersView> {
               alignment: Alignment.bottomCenter,
               child: !_iskeyboardVisible
                   ? null
-                  : FloatingActionButton(
-                      heroTag: "btn2",
-                      child: const Icon(Icons.add_shopping_cart_sharp),
-                      onPressed: () {
+                  : GestureDetector(
+                      onTap: () {
                         List<MainInputText> playerNamesFiltered =
                             playerInputList
                                 .where((playerInput) =>
@@ -96,7 +98,27 @@ class _PlayersViewState extends State<PlayersView> {
                         playerCtrl.resetPlayerList();
                         playerCtrl.fillPlayerList(playerNames);
                         Get.toNamed('/configuration');
-                      }),
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            color: AppColor.blue2,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              topRight: Radius.circular(5),
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            )),
+                        margin: const EdgeInsets.all(10.0),
+                        width: double.infinity,
+                        height: 50,
+                        //heroTag: "btn2",
+                        child: const Icon(
+                          Icons.arrow_right,
+                          size: 50,
+                          color: AppColor.orange,
+                        ),
+                      ),
+                    ),
             )
           ],
         ),

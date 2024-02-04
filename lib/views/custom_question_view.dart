@@ -9,7 +9,7 @@ class CustomQuestionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final questionCtrl = Get.put(QuestionController());
+    final questionCtrl = Get.find<QuestionController>();
     final textController = TextEditingController();
 
     return Scaffold(
