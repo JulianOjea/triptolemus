@@ -19,11 +19,16 @@ class MainInputText extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
-      margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+      //margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       height: 60.0,
       decoration: BoxDecoration(
         color: AppColor.orange,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(5),
+          bottomLeft: Radius.circular(5),
+          bottomRight: Radius.circular(5),
+        ),
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.black.withOpacity(0.10),

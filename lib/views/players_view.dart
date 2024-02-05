@@ -21,18 +21,19 @@ class _PlayersViewState extends State<PlayersView> {
   //TODO MAYBE YOU CAN DO LAZY PUT HERE
   final questionCtrl = Get.put(QuestionController());
 
-  @override
-  void initState() {
-    playerInputList.add(MainInputText(
-      textController: TextEditingController(),
-      hintText: 'Escribe un nombre',
-    ));
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   playerInputList.add(MainInputText(
+  //     textController: TextEditingController(),
+  //     hintText: 'Escribe un nombre',
+  //   ));
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final playerCtrl = Get.put(PlayerController());
+    final mainTextController = TextEditingController();
 
     return KeyboardDetection(
       controller: KeyboardDetectionController(onChanged: (value) {
@@ -61,23 +62,48 @@ class _PlayersViewState extends State<PlayersView> {
                         itemBuilder: (_, int index) {
                           return playerInputList[index];
                         }),
-                    FloatingActionButton(
-                        heroTag: "btn1",
-                        child: const Icon(Icons.accessible_forward_rounded),
-                        onPressed: () {
-                          if (playerInputList
-                              .last.textController.text.isNotEmpty) {
-                            playerInputList.add(MainInputText(
-                                textController: TextEditingController(),
-                                hintText: 'Escribe un nombre'));
-                          }
-                          setState(() {});
-                        }),
-                    const SizedBox(
-                      height: 10,
-                    ),
                   ],
                 ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: MainInputText(
+                        textController: mainTextController,
+                        hintText: 'Escribe un nombre'),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    height: 60,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                          backgroundColor: AppColor.red,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(15),
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                          )),
+                          child: const Icon(Icons.add),
+                          onPressed: () {
+                            if (mainTextController.text.isNotEmpty) {
+                              playerInputList.add(MainInputText(
+                                  textController: TextEditingController(
+                                      text: mainTextController.text),
+                                  hintText: 'Escribe un nombre'));
+                              mainTextController.clear();
+                            }
+                            setState(() {});
+                          }),
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -110,8 +136,7 @@ class _PlayersViewState extends State<PlayersView> {
                             )),
                         margin: const EdgeInsets.all(10.0),
                         width: double.infinity,
-                        height: 50,
-                        //heroTag: "btn2",
+                        height: 60,
                         child: const Icon(
                           Icons.arrow_right,
                           size: 50,
