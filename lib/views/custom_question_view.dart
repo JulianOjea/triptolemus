@@ -29,8 +29,15 @@ class CustomQuestionView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: MainInputText(
-                        textController: textController,
-                        hintText: 'Escibe una pregunta'),
+                      textController: textController,
+                      hintText: 'Escibe una pregunta',
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(5),
+                        bottomLeft: Radius.circular(5),
+                        bottomRight: Radius.circular(5),
+                      ),
+                    ),
                   ),
                   Container(
                       margin:
@@ -40,7 +47,6 @@ class CustomQuestionView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           if (textController.text.isNotEmpty) {
-                            print("añadiose");
                             questionCtrl.addCustomQuestion(textController.text);
                             textController.text = "";
                           }

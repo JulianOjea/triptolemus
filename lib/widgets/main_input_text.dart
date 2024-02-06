@@ -6,11 +6,13 @@ import 'package:triptolemus/constants/colors.dart';
 class MainInputText extends StatelessWidget {
   final TextEditingController textController;
   final String hintText;
+  final BorderRadius borderRadius;
 
   const MainInputText({
     Key? key,
     required this.textController,
     required this.hintText,
+    required this.borderRadius,
   }) : super(key: key);
 
   @override
@@ -23,12 +25,7 @@ class MainInputText extends StatelessWidget {
       height: 60.0,
       decoration: BoxDecoration(
         color: AppColor.orange,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(5),
-          bottomLeft: Radius.circular(5),
-          bottomRight: Radius.circular(5),
-        ),
+        borderRadius: borderRadius,
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.black.withOpacity(0.10),
@@ -37,6 +34,9 @@ class MainInputText extends StatelessWidget {
         ],
       ),
       child: TextField(
+        onTap: () {
+          print("im taping");
+        },
         controller: textController,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
