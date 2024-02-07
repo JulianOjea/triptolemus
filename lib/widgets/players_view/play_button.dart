@@ -5,8 +5,7 @@ import 'package:triptolemus/controllers/player_controller.dart';
 import 'package:triptolemus/widgets/players_view/player_list_input_text.dart';
 
 class PlayButton extends StatelessWidget {
-  List<PlayerListInputText> playerInputList = [];
-  PlayButton({super.key, required this.playerInputList});
+  PlayButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +15,16 @@ class PlayButton extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: GestureDetector(
         onTap: () {
-          List<PlayerListInputText> playerNamesFiltered = playerInputList
-              .where(
-                  (playerInput) => playerInput.textController.text.isNotEmpty)
-              .toList();
+          // List<PlayerListInputText> playerNamesFiltered = playerInputList
+          //     .where(
+          //         (playerInput) => playerInput.textController.text.isNotEmpty)
+          //     .toList();
 
-          List<String> playerNames =
-              playerNamesFiltered.map((e) => e.textController.text).toList();
-          playerCtrl.resetPlayerList();
-          playerCtrl.fillPlayerList(playerNames);
+          // List<String> playerNames =
+          //     playerNamesFiltered.map((e) => e.textController.text).toList();
+          // playerCtrl.resetPlayerList();
+          // playerCtrl.fillPlayerList(playerNames);
+          playerCtrl.resetIndex();
           Get.toNamed('/configuration');
         },
         child: Container(

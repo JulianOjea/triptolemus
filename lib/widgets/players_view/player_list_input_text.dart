@@ -7,10 +7,11 @@ import 'package:triptolemus/controllers/player_controller.dart';
 
 class PlayerListInputText extends StatelessWidget {
   final TextEditingController textController;
-
+  final int index;
   const PlayerListInputText({
     Key? key,
     required this.textController,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -36,13 +37,24 @@ class PlayerListInputText extends StatelessWidget {
         ],
       ),
       child: TextField(
+        onChanged: (val) {
+          print(val);
+          print("he cambiado");
+        },
+        onEditingComplete: () {
+          print("acabo de terminar de editar este campo");
+        },
         onTap: () {
           playerCtrl.setIsEditing(true);
         },
         controller: textController,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
+            suffixIcon: IconButton(
+              icon: Icon(Icons.remove),
+              onPressed: () => playerCtrl.removeAt(index),
+            ),
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
             hintText: 'Escribe un nombre'),

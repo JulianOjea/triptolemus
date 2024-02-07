@@ -18,7 +18,6 @@ class PlayersView extends StatefulWidget {
 }
 
 class _PlayersViewState extends State<PlayersView> {
-  List<PlayerListInputText> playerInputList = [];
   bool _iskeyboardVisible = false;
 
   //TODO MAYBE YOU CAN DO LAZY PUT HERE
@@ -46,57 +45,72 @@ class _PlayersViewState extends State<PlayersView> {
         setState(() {});
       }),
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: AppColor.blue,
+          title: const Text(
+            "Jugadores",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          ),
+        ),
         backgroundColor: const Color.fromRGBO(110, 205, 230, 1),
-        body: GestureDetector(
-          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: playerInputList.length,
-                          itemBuilder: (_, int index) {
-                            final item = playerInputList[index];
-                            return Dismissible(
-                              direction: DismissDirection.startToEnd,
-                              onDismissed: (direction) {
-                                playerInputList.removeAt(index);
-                              },
-                              key: Key(item.textController.text),
-                              background: Container(
-                                margin: const EdgeInsets.fromLTRB(
-                                    0, 10.0, 10.0, 0.0),
-                                color: AppColor.red,
-                                child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.black,
+        body: Obx(
+          () => GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: playerCtrl.playerList.length,
+                            itemBuilder: (_, int index) {
+                              String playerName =
+                                  playerCtrl.getPlayerAtIndex(index);
+                              return Dismissible(
+                                direction: DismissDirection.startToEnd,
+                                onDismissed: (direction) {
+                                  //print("i did it $index");
+                                  playerCtrl.removeAt(index);
+                                },
+                                key: Key(playerName),
+                                background: Container(
+                                  margin: const EdgeInsets.fromLTRB(
+                                      0, 10.0, 10.0, 0.0),
+                                  color: AppColor.red,
+                                  child: const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              child: Container(
-                                  margin: const EdgeInsets.fromLTRB(
-                                      10.0, 10.0, 10.0, 0.0),
-                                  child: playerInputList[index]),
-                            );
-                          }),
-                    ],
+                                child: Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 10.0, 0.0),
+                                    child: PlayerListInputText(
+                                        index: index,
+                                        textController: TextEditingController(
+                                          text: playerCtrl
+                                              .getPlayerAtIndex(index),
+                                        ))),
+                              );
+                            }),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              if (!playerCtrl.isEditingPlayer.value)
-                inputRow(mainTextController),
-              if (_iskeyboardVisible)
-                PlayButton(
-                  playerInputList: playerInputList,
-                ),
-            ],
+                if (!playerCtrl.isEditingPlayer.value)
+                  inputRow(mainTextController),
+                if (_iskeyboardVisible) PlayButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -139,9 +153,9 @@ class _PlayersViewState extends State<PlayersView> {
                     if (mainTextController.text.isNotEmpty) {
                       playerCtrl
                           .addPlayer(Player(name: mainTextController.text));
-                      playerInputList.add(PlayerListInputText(
-                          textController: TextEditingController(
-                              text: mainTextController.text)));
+                      // playerInputList.add(PlayerListInputText(
+                      //     textController: TextEditingController(
+                      //         text: mainTextController.text)));
                       mainTextController.clear();
                     }
                     setState(() {});
@@ -149,6 +163,19 @@ class _PlayersViewState extends State<PlayersView> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class NoPlayers extends StatelessWidget {
+  const NoPlayers({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: const Center(
+        child: Text('Añade 2 jugadors para empezar a jugar! :D'),
       ),
     );
   }

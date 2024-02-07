@@ -14,6 +14,10 @@ class PlayerController extends GetxController {
     return isEditingPlayer.value;
   }
 
+  String getPlayerAtIndex(int index) {
+    return playerList[index].name;
+  }
+
   void addPlayer(Player player) {
     playerList.add(player);
   }
@@ -53,5 +57,13 @@ class PlayerController extends GetxController {
 
   void setIsEditing(isEditing) {
     isEditingPlayer.value = isEditing;
+  }
+
+  void removeAt(index) {
+    playerList.removeAt(index);
+  }
+
+  void resetIndex() {
+    index.value = 0;
   }
 }
