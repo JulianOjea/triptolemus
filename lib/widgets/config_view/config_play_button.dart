@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
-import 'package:triptolemus/controllers/player_controller.dart';
-import 'package:triptolemus/widgets/players_view/player_list_input_text.dart';
+import 'package:triptolemus/controllers/questions_controller.dart';
 
-class PlayButton extends StatelessWidget {
-  PlayButton({super.key});
+class ConfigPlayButton extends StatelessWidget {
+  final questionCtrl = Get.find<QuestionController>();
+  ConfigPlayButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final playerCtrl = Get.find<PlayerController>();
-
     return Container(
       alignment: Alignment.bottomCenter,
       child: GestureDetector(
         onTap: () {
-          playerCtrl.resetIndex();
-          Get.toNamed('/configuration');
+          //TODO ROOUNDS
+          //playerCtrl.nRounds.value = _currentSliderValue.toInt();
+          questionCtrl.setActiveQuestionsList();
+          Navigator.pushNamed(context, "game");
         },
         child: Container(
           decoration: const BoxDecoration(
               color: AppColor.blue2,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5),
-                topRight: Radius.circular(5),
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
                 bottomLeft: Radius.circular(15),
                 bottomRight: Radius.circular(15),
               )),
