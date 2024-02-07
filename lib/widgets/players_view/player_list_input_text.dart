@@ -17,7 +17,8 @@ class PlayerListInputText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerCtrl = Get.find<PlayerController>();
-
+    textController.selection =
+        TextSelection.collapsed(offset: textController.text.length);
     return Container(
       padding: const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
       height: 60.0,
@@ -38,11 +39,7 @@ class PlayerListInputText extends StatelessWidget {
       ),
       child: TextField(
         onChanged: (val) {
-          print(val);
-          print("he cambiado");
-        },
-        onEditingComplete: () {
-          print("acabo de terminar de editar este campo");
+          playerCtrl.setPlayerValueAt(val, index);
         },
         onTap: () {
           playerCtrl.setIsEditing(true);

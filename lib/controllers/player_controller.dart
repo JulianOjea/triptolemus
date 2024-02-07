@@ -66,4 +66,8 @@ class PlayerController extends GetxController {
   void resetIndex() {
     index.value = 0;
   }
+
+  void setPlayerValueAt(value, index) {
+    playerList[index].name = value;
+  }
 }
