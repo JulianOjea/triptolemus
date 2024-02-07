@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_emoji: ^2.5.1
   get: ^4.6.6
   keyboard_detection: ^0.7.0
   provider: ^6.1.1

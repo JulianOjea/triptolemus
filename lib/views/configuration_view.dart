@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:triptolemus/constants/colors.dart';
-import 'package:triptolemus/controllers/player_controller.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
-import 'package:triptolemus/widgets/category_selector.dart';
+import 'package:triptolemus/widgets/config_view/category_selector.dart';
 import 'package:triptolemus/widgets/config_view/config_play_button.dart';
 
 class ConfigurationView extends StatefulWidget {
@@ -17,22 +16,25 @@ class ConfigurationView extends StatefulWidget {
 
 class _ConfigurationViewState extends State<ConfigurationView> {
   double _currentSliderValue = 5;
-  // int selectedCategory = 0;
-
-  // void selectCategory(int index) {
-  //   setState(() {
-  //     selectedCategory = index;
-  //   });
-  // }
+  bool light = true;
 
   @override
   Widget build(BuildContext context) {
     final questionCtrl = Get.find<QuestionController>();
-    final playerCtrl = Get.find<PlayerController>();
+    //final playerCtrl = Get.find<PlayerController>();
 
     TextEditingController textController = TextEditingController();
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: AppColor.blue,
+        title: const Text(
+          "Configura tu partida",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+        ),
+      ),
       backgroundColor: AppColor.blue,
       body: Center(
         child: Column(
@@ -51,18 +53,22 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                   ),
                   const SizedBox(height: 25),
                   Container(
-                      child: Slider(
-                          value: _currentSliderValue,
-                          max: 10,
-                          divisions: 10,
-                          label: _currentSliderValue.round().toString(),
-                          onChanged: (double value) {
-                            setState(() {
-                              _currentSliderValue = value;
-                              textController.text = value.toString();
-                              print(value);
-                            });
-                          })),
+                      height: 20,
+                      child: SliderTheme(
+                        data: SliderThemeData(trackHeight: 10),
+                        child: Slider(
+                            activeColor: AppColor.orange,
+                            value: _currentSliderValue,
+                            max: 10,
+                            divisions: 10,
+                            label: _currentSliderValue.round().toString(),
+                            onChanged: (double value) {
+                              setState(() {
+                                _currentSliderValue = value;
+                                textController.text = value.toString();
+                              });
+                            }),
+                      )),
                   const SizedBox(height: 25),
                   const Center(
                     child: Text(
@@ -75,21 +81,50 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  Center(
-                    child: Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: [
-                        CategorySelector(category: questionCtrl.categories[0]),
-                        const SizedBox(width: 10),
-                        CategorySelector(category: questionCtrl.categories[1]),
-                        const SizedBox(width: 10),
-                        CategorySelector(category: questionCtrl.categories[2]),
-                        const SizedBox(width: 10),
-                        CategorySelector(category: questionCtrl.categories[3]),
-                      ],
+                  Row(
+                    children: [
+                      Expanded(
+                          child: CategorySelector(
+                              emoji: '🤔',
+                              category: questionCtrl.categories[0])),
+                      Expanded(
+                          child: CategorySelector(
+                              emoji: '🤯',
+                              category: questionCtrl.categories[1])),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: CategorySelector(
+                              emoji: '👻',
+                              category: questionCtrl.categories[2])),
+                      Expanded(
+                          child: CategorySelector(
+                              emoji: '😱',
+                              category: questionCtrl.categories[3])),
+                    ],
+                  ),
+                  const SizedBox(height: 25),
+                  const Center(
+                    child: Text(
+                      "¿Orden aleatorio de jugadores?",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
+                  Switch(
+                    value: light,
+                    activeColor: AppColor.orange,
+                    onChanged: (bool value) {
+                      setState(() {
+                        light = value;
+                      });
+                    },
+                  )
                 ],
               ),
             ),
