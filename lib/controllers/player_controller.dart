@@ -8,6 +8,11 @@ class PlayerController extends GetxController {
   var index = 0.obs;
   var actualRound = 0;
   var nRounds = 0.obs;
+  var isEditingPlayer = false.obs;
+
+  bool getIsEditingPlayer() {
+    return isEditingPlayer.value;
+  }
 
   void addPlayer(Player player) {
     playerList.add(player);
@@ -44,5 +49,9 @@ class PlayerController extends GetxController {
         print("Ahora se acaba el juego");
       }
     }
+  }
+
+  void setIsEditing(isEditing) {
+    isEditingPlayer.value = isEditing;
   }
 }

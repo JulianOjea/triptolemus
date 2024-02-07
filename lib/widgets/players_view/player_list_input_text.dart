@@ -5,16 +5,12 @@ import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
 
-class MainInputText extends StatelessWidget {
+class PlayerListInputText extends StatelessWidget {
   final TextEditingController textController;
-  final String hintText;
-  final BorderRadius borderRadius;
 
-  const MainInputText({
+  const PlayerListInputText({
     Key? key,
     required this.textController,
-    required this.hintText,
-    required this.borderRadius,
   }) : super(key: key);
 
   @override
@@ -26,7 +22,12 @@ class MainInputText extends StatelessWidget {
       height: 60.0,
       decoration: BoxDecoration(
         color: AppColor.orange,
-        borderRadius: borderRadius,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
+          bottomRight: Radius.circular(15),
+        ),
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.black.withOpacity(0.10),
@@ -35,14 +36,16 @@ class MainInputText extends StatelessWidget {
         ],
       ),
       child: TextField(
-        onTap: () => playerCtrl.setIsEditing(false),
+        onTap: () {
+          playerCtrl.setIsEditing(true);
+        },
         controller: textController,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
-            hintText: hintText),
+            hintText: 'Escribe un nombre'),
       ),
     );
   }

@@ -8,6 +8,7 @@ import 'package:triptolemus/models/player.dart';
 
 import 'package:triptolemus/widgets/main_input_text.dart';
 import 'package:triptolemus/widgets/players_view/play_button.dart';
+import 'package:triptolemus/widgets/players_view/player_list_input_text.dart';
 
 class PlayersView extends StatefulWidget {
   const PlayersView({super.key});
@@ -17,39 +18,35 @@ class PlayersView extends StatefulWidget {
 }
 
 class _PlayersViewState extends State<PlayersView> {
-  List<MainInputText> playerInputList = [];
+  List<PlayerListInputText> playerInputList = [];
   bool _iskeyboardVisible = false;
 
   //TODO MAYBE YOU CAN DO LAZY PUT HERE
+  //TODO ON HIDE EDIT NEEDS TO BE IMPROVED
   final questionCtrl = Get.put(QuestionController());
-
-  // @override
-  // void initState() {
-  //   playerInputList.add(MainInputText(
-  //     textController: TextEditingController(),
-  //     hintText: 'Escribe un nombre',
-  //   ));
-  //   super.initState();
-  // }
+  final playerCtrl = Get.put(PlayerController());
 
   @override
   Widget build(BuildContext context) {
     setState(() {});
-    final playerCtrl = Get.put(PlayerController());
     final mainTextController = TextEditingController();
 
     return KeyboardDetection(
       controller: KeyboardDetectionController(onChanged: (value) {
         if (value == KeyboardState.visibling) {
+          print("ME MUESTROO");
           _iskeyboardVisible = false;
+          //playerCtrl.isEditingPlayer
         } else if (value == KeyboardState.hidden) {
+          print("ME OCULTOO ");
           _iskeyboardVisible = true;
+          playerCtrl.setIsEditing(false);
         }
 
         setState(() {});
       }),
       child: Scaffold(
-        backgroundColor: AppColor.blue,
+        backgroundColor: const Color.fromRGBO(110, 205, 230, 1),
         body: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Column(
@@ -93,72 +90,65 @@ class _PlayersViewState extends State<PlayersView> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: MainInputText(
-                          textController: mainTextController,
-                          hintText: 'Escribe un nombre',
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(5),
-                            bottomLeft: Radius.circular(5),
-                            bottomRight: Radius.circular(5),
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      height: 60,
-                      child: FittedBox(
-                        child: FloatingActionButton(
-                            backgroundColor: AppColor.red,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(15),
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                            )),
-                            child: const Icon(Icons.add),
-                            onPressed: () {
-                              if (mainTextController.text.isNotEmpty) {
-                                playerCtrl.addPlayer(
-                                    Player(name: mainTextController.text));
-                                playerInputList.add(
-                                  MainInputText(
-                                    textController: TextEditingController(
-                                        text: mainTextController.text),
-                                    hintText: 'Escribe un nombre',
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
-                                      bottomLeft: Radius.circular(15),
-                                      bottomRight: Radius.circular(15),
-                                    ),
-                                  ),
-                                );
-                                mainTextController.clear();
-                              }
-                              setState(() {});
-                            }),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              //TODO CONDITION
-
+              if (!playerCtrl.isEditingPlayer.value)
+                inputRow(mainTextController),
               if (_iskeyboardVisible)
                 PlayButton(
-                  playerInputList: this.playerInputList,
+                  playerInputList: playerInputList,
                 ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container inputRow(TextEditingController mainTextController) {
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      child: Row(
+        children: [
+          Flexible(
+            child: MainInputText(
+                textController: mainTextController,
+                hintText: 'Escribe un nombre',
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(5),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+                )),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          SizedBox(
+            height: 60,
+            child: FittedBox(
+              child: FloatingActionButton(
+                  backgroundColor: AppColor.red,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
+                  )),
+                  child: const Icon(Icons.add),
+                  onPressed: () {
+                    if (mainTextController.text.isNotEmpty) {
+                      playerCtrl
+                          .addPlayer(Player(name: mainTextController.text));
+                      playerInputList.add(PlayerListInputText(
+                          textController: TextEditingController(
+                              text: mainTextController.text)));
+                      mainTextController.clear();
+                    }
+                    setState(() {});
+                  }),
+            ),
+          ),
+        ],
       ),
     );
   }

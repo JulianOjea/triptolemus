@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
-import 'package:triptolemus/widgets/main_input_text.dart';
+import 'package:triptolemus/widgets/players_view/player_list_input_text.dart';
 
 class PlayButton extends StatelessWidget {
-  List<MainInputText> playerInputList = [];
+  List<PlayerListInputText> playerInputList = [];
   PlayButton({super.key, required this.playerInputList});
 
   @override
@@ -16,7 +16,7 @@ class PlayButton extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: GestureDetector(
         onTap: () {
-          List<MainInputText> playerNamesFiltered = playerInputList
+          List<PlayerListInputText> playerNamesFiltered = playerInputList
               .where(
                   (playerInput) => playerInput.textController.text.isNotEmpty)
               .toList();
