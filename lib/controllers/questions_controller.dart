@@ -1,7 +1,5 @@
-import 'dart:ffi';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/data/questions.dart';
 import 'package:triptolemus/models/category.dart';
@@ -22,7 +20,7 @@ class QuestionController extends GetxController {
   String getQuestionString(String name) {
     final random = Random();
     Question question = activeQuestions[random.nextInt(activeQuestions.length)];
-    return question.text.replaceAll("%name%", name);
+    return question.text.replaceAll("%name%", name).replaceAll('😏', name);
   }
 
   void setActiveQuestionsList() {

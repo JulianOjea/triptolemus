@@ -1,26 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_detection/keyboard_detection.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
 
-class QuestionEditor extends StatelessWidget {
+class QuestionEditor extends StatefulWidget {
   const QuestionEditor({super.key});
+
+  @override
+  State<QuestionEditor> createState() => _QuestionEditorState();
+}
+
+class _QuestionEditorState extends State<QuestionEditor> {
+  final textController = TextEditingController();
+  bool isEditing = false;
+  var fieldvalue = "";
 
   @override
   Widget build(BuildContext context) {
     final questionCtrl = Get.find<QuestionController>();
-    final textController = TextEditingController();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Nueva pregunta"),
+    return KeyboardDetection(
+      controller: KeyboardDetectionController(onChanged: (value) {
+        if (value == KeyboardState.visibling) {
+          isEditing = true;
+          //playerCtrl.isEditingPlayer
+        } else if (value == KeyboardState.hiding) {
+          isEditing = false;
+        }
+        setState(() {});
+      }),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Nueva pregunta"),
+        ),
+        backgroundColor: AppColor.blue,
+        body: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  inputFieldContainer(textController),
+                  confirmButton(questionCtrl, textController),
+                ],
+              ),
+            ),
+            if (isEditing) placeHolderContainer(),
+          ],
+        ),
       ),
-      backgroundColor: AppColor.blue,
-      body: Column(
-        children: [
-          inputFieldContainer(textController),
-          confirmButton(questionCtrl, textController)
-        ],
+    );
+  }
+
+  GestureDetector placeHolderContainer() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          textController.text += " 😏";
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        height: 60,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            color: AppColor.orange,
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        child: const Center(
+            child: Text(
+          '😏',
+          style: TextStyle(fontSize: 40),
+        )),
       ),
     );
   }
@@ -40,7 +90,9 @@ class QuestionEditor extends StatelessWidget {
           ),
           child: const Icon(Icons.done),
           onPressed: () {
-            questionCtrl.addCustomQuestion(textController.text);
+            if (textController.text.isNotEmpty) {
+              questionCtrl.addCustomQuestion(textController.text);
+            }
             Get.back();
           }),
     );

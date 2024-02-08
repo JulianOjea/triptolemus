@@ -35,7 +35,7 @@ class _PlayersViewState extends State<PlayersView> {
         if (value == KeyboardState.visibling) {
           _iskeyboardVisible = false;
           //playerCtrl.isEditingPlayer
-        } else if (value == KeyboardState.hidden) {
+        } else if (value == KeyboardState.hiding) {
           _iskeyboardVisible = true;
           playerCtrl.setIsEditing(false);
         }
