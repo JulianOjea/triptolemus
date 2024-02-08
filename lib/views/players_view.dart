@@ -22,8 +22,8 @@ class _PlayersViewState extends State<PlayersView> {
 
   //TODO MAYBE YOU CAN DO LAZY PUT HERE
   //TODO ON HIDE EDIT NEEDS TO BE IMPROVED
-  final questionCtrl = Get.put(QuestionController());
-  final playerCtrl = Get.put(PlayerController());
+  final questionCtrl = Get.find<QuestionController>();
+  final playerCtrl = Get.find<PlayerController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,9 @@ class _PlayersViewState extends State<PlayersView> {
     return KeyboardDetection(
       controller: KeyboardDetectionController(onChanged: (value) {
         if (value == KeyboardState.visibling) {
-          print("ME MUESTROO");
           _iskeyboardVisible = false;
           //playerCtrl.isEditingPlayer
         } else if (value == KeyboardState.hidden) {
-          print("ME OCULTOO ");
           _iskeyboardVisible = true;
           playerCtrl.setIsEditing(false);
         }

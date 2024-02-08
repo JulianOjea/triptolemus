@@ -5,6 +5,7 @@ import 'package:triptolemus/views/custom_question_view.dart';
 import 'package:triptolemus/views/game_view.dart';
 import 'package:triptolemus/views/home_page_view.dart';
 import 'package:triptolemus/views/players_view.dart';
+import 'package:triptolemus/views/question_editor.dart';
 
 void main() {
   runApp(const MainApp());
@@ -38,7 +39,11 @@ class MainApp extends StatelessWidget {
         ),
         GetPage(
           name: '/home_page_view',
-          page: () => const HomePageView(),
+          page: () => HomePageView(),
+        ),
+        GetPage(
+          name: '/question_editor',
+          page: () => const QuestionEditor(),
         )
       ],
     );
