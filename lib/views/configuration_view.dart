@@ -69,6 +69,26 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                               });
                             }),
                       )),
+                  SizedBox(height: 25),
+                  const Center(
+                    child: Text(
+                      "¿Quieres jugar con tus preguntas personalizadas?",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Switch(
+                    value: light,
+                    activeColor: AppColor.orange,
+                    onChanged: (bool value) {
+                      setState(() {
+                        light = value;
+                      });
+                    },
+                  ),
                   const SizedBox(height: 25),
                   const Center(
                     child: Text(
@@ -89,8 +109,8 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                               category: questionCtrl.categories[0])),
                       Expanded(
                           child: CategorySelector(
-                              emoji: '🤯',
-                              category: questionCtrl.categories[1])),
+                              emoji: '😱',
+                              category: questionCtrl.categories[3])),
                     ],
                   ),
                   Row(
@@ -101,8 +121,8 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                               category: questionCtrl.categories[2])),
                       Expanded(
                           child: CategorySelector(
-                              emoji: '😱',
-                              category: questionCtrl.categories[3])),
+                              emoji: '🤯',
+                              category: questionCtrl.categories[1])),
                     ],
                   ),
                   const SizedBox(height: 25),

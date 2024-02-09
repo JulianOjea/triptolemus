@@ -13,8 +13,10 @@ class QuestionController extends GetxController {
     QuestionCategory(QuestionCategory.confidenciales, false),
   ].obs;
 
+  //List of questions
   var activeQuestions = [].obs;
 
+  //List of questions
   var customQuestionList = [].obs;
 
   String getQuestionString(String name) {
