@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:keyboard_detection/keyboard_detection.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
+import 'package:triptolemus/models/category.dart';
 
 class QuestionEditor extends StatefulWidget {
   const QuestionEditor({super.key});
@@ -15,6 +16,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
   final textController = TextEditingController();
   bool isEditing = false;
   var fieldvalue = "";
+  String selectedContainer = QuestionCategory.dilemas;
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +40,73 @@ class _QuestionEditorState extends State<QuestionEditor> {
         body: Column(
           children: [
             Expanded(
-              child: Column(
-                children: [
-                  inputFieldContainer(textController),
-                  confirmButton(questionCtrl, textController),
-                ],
+              child: GestureDetector(
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                child: Column(
+                  children: [
+                    inputFieldContainer(textController),
+                    if (!isEditing) Expanded(child: categorySelector()),
+                    if (!isEditing) confirmButton(questionCtrl, textController),
+                    const SizedBox(
+                      height: 10,
+                    )
+                  ],
+                ),
               ),
             ),
             if (isEditing) placeHolderContainer(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container categorySelector() {
+    return Container(
+      child: Column(
+        children: [
+          containerSelector(QuestionCategory.dilemas, '🤔'),
+          containerSelector(QuestionCategory.picante, '👻'),
+          containerSelector(QuestionCategory.confidenciales, '😱'),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector containerSelector(container_text, emoji) {
+    return GestureDetector(
+      onTap: () {
+        selectedContainer = container_text;
+        setState(() {});
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 5.0),
+        height: 60,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: selectedContainer == container_text
+                ? Colors.white
+                : AppColor.orange,
+            borderRadius: const BorderRadius.all(Radius.circular(5))),
+        child: Stack(
+          children: [
+            Container(
+              margin: EdgeInsetsDirectional.only(start: 5.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  emoji,
+                  style: TextStyle(fontSize: 29, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                container_text,
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              ),
+            )
           ],
         ),
       ),
@@ -56,7 +117,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          textController.text += " 😏";
+          textController.text += "😏";
         });
       },
       child: Container(
