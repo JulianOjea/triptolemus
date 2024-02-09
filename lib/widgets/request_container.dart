@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
@@ -14,63 +15,16 @@ class RequestContainer extends StatefulWidget {
 }
 
 class _RequestContainerState extends State<RequestContainer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-
-    _animation = Tween<double>(begin: 300.0, end: 0).animate(_controller);
-
-    // Escuchar el cambio de estado de la animación
-    _animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        // Cuando la animación llega al final, revertir la animación
-        _controller.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        // Cuando la animación se revierte completamente, avanzar nuevamente
-        //_controller.forward();
-      }
-    });
-  }
-
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final playerCrtl = Get.find<PlayerController>();
     final questionCrtl = Get.find<QuestionController>();
+    var animationCtrl = AnimationController(vsync: this);
 
     return Column(
       children: [
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            return Container(
-              decoration: BoxDecoration(
-                  color: AppColor.orange,
-                  borderRadius: BorderRadius.circular(20.0)),
-              width: _animation.value,
-              height: _animation.value,
-              child: Center(
-                child: Text(
-                  textAlign: TextAlign.center,
-                  questionCrtl.getQuestionString(
-                      playerCrtl.getRandomPlayerWithoutActual().name),
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            );
-          },
-        ),
+        animatedContainer(questionCrtl, playerCrtl, animationCtrl),
         const SizedBox(
           height: 50,
         ),
@@ -79,10 +33,44 @@ class _RequestContainerState extends State<RequestContainer>
             onPressed: () {
               playerCrtl.nextPlayer();
               playerCrtl.nextRound();
-              _controller.forward();
+              animationCtrl.forward();
               setState(() {});
             })
       ],
+    );
+  }
+
+  Animate animatedContainer(QuestionController questionCrtl,
+      PlayerController playerCrtl, AnimationController animationCtrl) {
+    return Animate(
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColor.orange, borderRadius: BorderRadius.circular(20.0)),
+        width: 300,
+        height: 300,
+        child: Center(
+          child: Text(
+            textAlign: TextAlign.center,
+            questionCrtl.getQuestionString(
+                playerCrtl.getRandomPlayerWithoutActual().name),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+        ),
+      )
+          .animate(controller: animationCtrl)
+          .move(
+              // duration: 1000.ms,
+              curve: Curves.elasticInOut,
+              end: Offset(400, -200),
+              duration: 1000.ms)
+          .then()
+          .moveX(end: -800, duration: Duration.zero)
+          .then()
+          .move(
+              curve: Curves.elasticInOut,
+              end: Offset(400, 200),
+              duration: 700.ms),
     );
   }
 }
