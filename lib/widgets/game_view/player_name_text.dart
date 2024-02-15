@@ -29,13 +29,15 @@ class _PlayerNameTextState extends State<PlayerNameText>
               autoPlay: false,
               onComplete: (_) {
                 widget.animationCtrlEnd.forward();
+                playerCtrl.nextPlayer();
                 setState(() {});
               },
             )
-            .moveX(begin: 0, end: 300, duration: 700.ms)
+            .moveX(
+                curve: Curves.easeOutExpo, begin: 0, end: 300, duration: 700.ms)
             .then()
             .animate(controller: widget.animationCtrlEnd, autoPlay: false)
             .moveX(end: -600, duration: 0.ms)
-            .moveX(end: 300, duration: 700.ms));
+            .moveX(curve: Curves.decelerate, end: 300, duration: 700.ms));
   }
 }

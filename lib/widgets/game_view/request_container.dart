@@ -50,7 +50,6 @@ class _RequestContainerState extends State<RequestContainer>
         FloatingActionButton(
             child: const Icon(Icons.add_road),
             onPressed: () {
-              playerCrtl.nextPlayer();
               playerCrtl.nextRound();
               _animationCtrl.reset();
               _animationCtrl.forward();
