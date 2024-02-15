@@ -23,24 +23,30 @@ class RequestContainer extends StatefulWidget {
 class _RequestContainerState extends State<RequestContainer>
     with TickerProviderStateMixin {
   late AnimationController _animationCtrl;
+  late AnimationController _animationCtrlEnd;
+
+  final playerCrtl = Get.find<PlayerController>();
+  final questionCrtl = Get.find<QuestionController>();
+  late String questionText;
 
   @override
   void initState() {
     super.initState();
     _animationCtrl = AnimationController(vsync: this);
+    _animationCtrlEnd = AnimationController(vsync: this);
+    questionText = questionCrtl
+        .getQuestionString(playerCrtl.getRandomPlayerWithoutActual().name);
   }
 
   @override
   void dispose() {
     _animationCtrl.dispose();
+    _animationCtrlEnd.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final playerCrtl = Get.find<PlayerController>();
-    final questionCrtl = Get.find<QuestionController>();
-
     return Column(
       children: [
         animatedContainer(questionCrtl, playerCrtl, _animationCtrl),
@@ -52,6 +58,7 @@ class _RequestContainerState extends State<RequestContainer>
             onPressed: () {
               playerCrtl.nextRound();
               _animationCtrl.reset();
+              // _animationCtrlEnd.reset();
               _animationCtrl.forward();
               widget.animationTextCtrl.reset();
               widget.animationTextCtrlEnd.reset();
@@ -71,21 +78,37 @@ class _RequestContainerState extends State<RequestContainer>
       child: Center(
         child: Text(
           textAlign: TextAlign.center,
-          questionCrtl.getQuestionString(
-              playerCrtl.getRandomPlayerWithoutActual().name),
+          questionText,
           style: const TextStyle(
               color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
     )
-        .animate(controller: animationCtrl, autoPlay: false)
+        .animate(
+            controller: animationCtrl,
+            autoPlay: false,
+            onComplete: (_) {
+              // _animationCtrlEnd.forward();
+            })
         .move(
-            // duration: 1000.ms,
             curve: Curves.elasticInOut,
             end: const Offset(400, -200),
             duration: 1000.ms)
+        .callback(
+            duration: 1000.ms,
+            callback: (flag) {
+              //TODO: WHAT IS THIS CALLBACK FLAG TRICK XDD
+              if (flag == false) {
+                questionText = questionCrtl.getQuestionString(
+                    playerCrtl.getRandomPlayerWithoutActual().name);
+                setState(() {});
+              }
+            })
         .then()
-        .moveX(end: -800, duration: Duration.zero)
+        .moveX(
+          end: -800,
+          duration: Duration.zero,
+        )
         .then()
         .move(
             curve: Curves.elasticInOut,
