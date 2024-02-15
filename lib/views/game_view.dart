@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
-import 'package:triptolemus/widgets/request_container.dart';
+import 'package:triptolemus/widgets/game_view/player_name_text.dart';
+import 'package:triptolemus/widgets/game_view/request_container.dart';
 
 class GameView extends StatefulWidget {
   const GameView({super.key});
@@ -11,39 +12,49 @@ class GameView extends StatefulWidget {
   State<GameView> createState() => _GameViewState();
 }
 
-class _GameViewState extends State<GameView> {
+class _GameViewState extends State<GameView> with TickerProviderStateMixin {
   final playerCtrl = Get.find<PlayerController>();
+  late AnimationController _animationTextCtrl;
+  late AnimationController _animationTextCtrlEnd;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationTextCtrl = AnimationController(vsync: this);
+    _animationTextCtrlEnd = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _animationTextCtrl.dispose();
+    _animationTextCtrlEnd.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    RequestContainer rc = RequestContainer();
-
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: AppColor.blue,
-        body: Center(
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Obx(
-                  () => Text(
-                      playerCtrl.playerList[playerCtrl.index.value].name
-                          .toUpperCase(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 70,
-                          color: Colors.white)),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                rc,
-              ],
-            )),
-          ),
+    return Scaffold(
+      backgroundColor: AppColor.blue,
+      body: Center(
+        child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              PlayerNameText(
+                animationCtrl: _animationTextCtrl,
+                animationCtrlEnd: _animationTextCtrlEnd,
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+              RequestContainer(
+                animationTextCtrl: _animationTextCtrl,
+                animationTextCtrlEnd: _animationTextCtrlEnd,
+              ),
+            ],
+          )),
         ),
       ),
     );
