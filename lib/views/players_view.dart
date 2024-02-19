@@ -18,7 +18,7 @@ class PlayersView extends StatefulWidget {
 }
 
 class _PlayersViewState extends State<PlayersView> {
-  bool _iskeyboardVisible = false;
+  bool _iskeyboardVisible = true;
 
   //TODO MAYBE YOU CAN DO LAZY PUT HERE
   //TODO ON HIDE EDIT NEEDS TO BE IMPROVED
@@ -39,7 +39,6 @@ class _PlayersViewState extends State<PlayersView> {
           _iskeyboardVisible = true;
           playerCtrl.setIsEditing(false);
         }
-
         setState(() {});
       }),
       child: Scaffold(
