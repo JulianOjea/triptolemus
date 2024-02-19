@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_detection/keyboard_detection.dart';
@@ -18,7 +19,7 @@ class PlayersView extends StatefulWidget {
 }
 
 class _PlayersViewState extends State<PlayersView> {
-  bool _iskeyboardVisible = true;
+  bool _isGoToConfigVisible = true;
 
   //TODO MAYBE YOU CAN DO LAZY PUT HERE
   //TODO ON HIDE EDIT NEEDS TO BE IMPROVED
@@ -29,16 +30,16 @@ class _PlayersViewState extends State<PlayersView> {
   Widget build(BuildContext context) {
     setState(() {});
     final mainTextController = TextEditingController();
-
     return KeyboardDetection(
       controller: KeyboardDetectionController(onChanged: (value) {
         if (value == KeyboardState.visibling) {
-          _iskeyboardVisible = false;
+          _isGoToConfigVisible = false;
           //playerCtrl.isEditingPlayer
         } else if (value == KeyboardState.hiding) {
-          _iskeyboardVisible = true;
+          _isGoToConfigVisible = true;
           playerCtrl.setIsEditing(false);
         }
+
         setState(() {});
       }),
       child: Scaffold(
@@ -53,62 +54,86 @@ class _PlayersViewState extends State<PlayersView> {
         ),
         backgroundColor: const Color.fromRGBO(110, 205, 230, 1),
         body: Obx(
-          () => GestureDetector(
-            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: playerCtrl.playerList.length,
-                            itemBuilder: (_, int index) {
-                              String playerName =
-                                  playerCtrl.getPlayerAtIndex(index);
-                              return Dismissible(
-                                direction: DismissDirection.startToEnd,
-                                onDismissed: (direction) {
-                                  //print("i did it $index");
-                                  playerCtrl.removeAt(index);
-                                },
-                                key: Key(playerName),
-                                background: Container(
-                                  margin: const EdgeInsets.fromLTRB(
-                                      0, 10.0, 10.0, 0.0),
-                                  color: AppColor.red,
-                                  child: const Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Icon(
-                                      Icons.delete,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                child: Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        10.0, 10.0, 10.0, 0.0),
-                                    child: PlayerListInputText(
-                                        index: index,
-                                        textController: TextEditingController(
-                                          text: playerCtrl
-                                              .getPlayerAtIndex(index),
-                                        ))),
-                              );
-                            }),
-                      ],
+          () {
+            return GestureDetector(
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: Column(
+                children: [
+                  playerCtrl.playerList.isEmpty
+                      ? placeholderNotEnoughPlayers()
+                      : playerNameList(),
+                  if (!playerCtrl.isEditingPlayer.value)
+                    inputRow(mainTextController),
+                  Obx(() {
+                    if (playerCtrl.playerList.length <= 1) {
+                      return Container();
+                    } else {
+                      if (_isGoToConfigVisible) {
+                        return PlayButton();
+                      } else {
+                        return Container();
+                      }
+                    }
+                  })
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Expanded placeholderNotEnoughPlayers() {
+    return const Expanded(
+        child: Center(
+            child: Text(
+      "Añade 2 jugadores para jugar 😀",
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    )));
+  }
+
+  Expanded playerNameList() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: playerCtrl.playerList.length,
+                itemBuilder: (_, int index) {
+                  String playerName = playerCtrl.getPlayerAtIndex(index);
+                  return Dismissible(
+                    direction: DismissDirection.startToEnd,
+                    onDismissed: (direction) {
+                      //print("i did it $index");
+                      playerCtrl.removeAt(index);
+                    },
+                    key: Key(playerName),
+                    background: Container(
+                      margin: const EdgeInsets.fromLTRB(0, 10.0, 10.0, 0.0),
+                      color: AppColor.red,
+                      child: const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                if (!playerCtrl.isEditingPlayer.value)
-                  inputRow(mainTextController),
-                if (_iskeyboardVisible) PlayButton(),
-              ],
-            ),
-          ),
+                    child: Container(
+                        margin:
+                            const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                        child: PlayerListInputText(
+                            index: index,
+                            textController: TextEditingController(
+                              text: playerCtrl.getPlayerAtIndex(index),
+                            ))),
+                  );
+                }),
+          ],
         ),
       ),
     );
