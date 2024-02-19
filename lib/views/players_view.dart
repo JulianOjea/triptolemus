@@ -153,8 +153,11 @@ class _PlayersViewState extends State<PlayersView> {
                       // playerInputList.add(PlayerListInputText(
                       //     textController: TextEditingController(
                       //         text: mainTextController.text)));
-                      mainTextController.clear();
+                    } else {
+                      playerCtrl.addPlayer(Player(
+                          name: "Jugador ${playerCtrl.playerList.length + 1}"));
                     }
+                    mainTextController.clear();
                     setState(() {});
                   }),
             ),
