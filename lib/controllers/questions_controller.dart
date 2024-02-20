@@ -80,4 +80,11 @@ class QuestionController extends GetxController {
   void addCustomQuestion(String questionText, String qc) {
     customQuestionList.add(Question(questionText, qc, isCustom: true));
   }
+
+  bool isAnyCatSelected() {
+    return categories[0].isActive ||
+        categories[1].isActive ||
+        categories[2].isActive ||
+        categories[3].isActive;
+  }
 }
