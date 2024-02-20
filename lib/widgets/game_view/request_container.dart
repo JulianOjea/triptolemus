@@ -56,13 +56,15 @@ class _RequestContainerState extends State<RequestContainer>
         FloatingActionButton(
             child: const Icon(Icons.add_road),
             onPressed: () {
-              playerCrtl.nextRound();
-              _animationCtrl.reset();
-              // _animationCtrlEnd.reset();
-              _animationCtrl.forward();
-              widget.animationTextCtrl.reset();
-              widget.animationTextCtrlEnd.reset();
-              widget.animationTextCtrl.forward();
+              if (playerCrtl.nextRound()) {
+                _animationCtrl.reset();
+                _animationCtrl.forward();
+                widget.animationTextCtrl.reset();
+                widget.animationTextCtrlEnd.reset();
+                widget.animationTextCtrl.forward();
+              } else {
+                Navigator.pushNamed(context, "configuration");
+              }
             })
       ],
     );

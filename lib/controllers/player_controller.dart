@@ -46,13 +46,14 @@ class PlayerController extends GetxController {
     return player;
   }
 
-  void nextRound() {
+  bool nextRound() {
     if (index.value == playerList.length - 1) {
       actualRound++;
-      if (actualRound == nRounds.value) {
-        print("Ahora se acaba el juego");
+      if (actualRound > nRounds.value) {
+        return false;
       }
     }
+    return true;
   }
 
   void setIsEditing(isEditing) {

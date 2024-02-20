@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:triptolemus/constants/colors.dart';
+import 'package:triptolemus/controllers/player_controller.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
 import 'package:triptolemus/widgets/config_view/category_selector.dart';
 import 'package:triptolemus/widgets/config_view/config_play_button.dart';
@@ -35,6 +36,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
   @override
   Widget build(BuildContext context) {
     final questionCtrl = Get.find<QuestionController>();
+    final playerController = Get.find<PlayerController>();
 
     TextEditingController textController = TextEditingController();
 
@@ -80,7 +82,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
                       const SizedBox(
                         height: 100,
                       ),
-                      nRoundSelector(textController),
+                      nRoundSelector(textController, playerController),
                       const SizedBox(
                         height: 100,
                       ),
@@ -173,7 +175,8 @@ class _ConfigurationViewState extends State<ConfigurationView>
     );
   }
 
-  Column nRoundSelector(TextEditingController textController) {
+  Column nRoundSelector(
+      TextEditingController textController, PlayerController playerController) {
     return Column(
       children: [
         const Text(
@@ -194,6 +197,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
                   label: _currentSliderValue.round().toString(),
                   onChanged: (double value) {
                     setState(() {
+                      playerController.nRounds.value = value.round();
                       _currentSliderValue = value;
                       textController.text = value.toString();
                     });

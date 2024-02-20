@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
+import 'package:triptolemus/controllers/player_controller.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
 
 class ConfigPlayButton extends StatelessWidget {
   final questionCtrl = Get.find<QuestionController>();
+  final playerCtrl = Get.find<PlayerController>();
   ConfigPlayButton({super.key});
 
   @override
@@ -17,6 +19,8 @@ class ConfigPlayButton extends StatelessWidget {
               ? null
               : () {
                   questionCtrl.setActiveQuestionsList();
+                  playerCtrl.actualRound = 0;
+                  playerCtrl.index.value = 0;
                   Navigator.pushNamed(context, "game");
                 },
           child: Container(
