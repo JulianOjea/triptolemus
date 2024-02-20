@@ -62,14 +62,28 @@ class _ConfigurationViewState extends State<ConfigurationView>
                 },
                 children: [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
                       customSelector(questionCtrl),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       categoryBoxSelectors(questionCtrl),
                     ],
                   ),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      const SizedBox(
+                        height: 100,
+                      ),
                       nRoundSelector(textController),
+                      const SizedBox(
+                        height: 100,
+                      ),
                       randomSelector(),
                     ],
                   ),
@@ -77,6 +91,10 @@ class _ConfigurationViewState extends State<ConfigurationView>
               ),
               TabPageSelector(
                 controller: _tabController,
+                color: Colors.black26,
+                selectedColor: AppColor.orange,
+                indicatorSize: 16,
+                borderStyle: BorderStyle.none,
               )
             ],
           )),
@@ -112,6 +130,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
 
   Column categoryBoxSelectors(QuestionController questionCtrl) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Center(
           child: Text(
@@ -122,26 +141,10 @@ class _ConfigurationViewState extends State<ConfigurationView>
           ),
         ),
         const SizedBox(height: 25),
-        Row(
-          children: [
-            Expanded(
-                child: CategorySelector(
-                    emoji: '🤔', category: questionCtrl.categories[0])),
-            Expanded(
-                child: CategorySelector(
-                    emoji: '😱', category: questionCtrl.categories[2])),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-                child: CategorySelector(
-                    emoji: '👻', category: questionCtrl.categories[1])),
-            Expanded(
-                child: CategorySelector(
-                    emoji: '🤯', category: questionCtrl.categories[3])),
-          ],
-        ),
+        CategorySelector(emoji: '🤔', category: questionCtrl.categories[0]),
+        CategorySelector(emoji: '😱', category: questionCtrl.categories[2]),
+        CategorySelector(emoji: '👻', category: questionCtrl.categories[1]),
+        CategorySelector(emoji: '🤯', category: questionCtrl.categories[3]),
         const SizedBox(height: 25),
       ],
     );
