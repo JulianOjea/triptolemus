@@ -8,16 +8,19 @@ import 'package:triptolemus/models/question.dart';
 class QuestionController extends GetxController {
   var categories = [
     QuestionCategory(QuestionCategory.dilemas, true),
-    QuestionCategory(QuestionCategory.personalizada, false),
     QuestionCategory(QuestionCategory.picante, false),
     QuestionCategory(QuestionCategory.confidenciales, false),
+    QuestionCategory(QuestionCategory.personalizadas, false)
   ].obs;
 
   //List of questions
   var activeQuestions = [].obs;
 
-  //List of questions
+  //List of custom questions
   var customQuestionList = [].obs;
+
+  // custom question switch state
+  var insertQustomCuestion = false.obs;
 
   String getQuestionString(String name) {
     final random = Random();
@@ -30,8 +33,12 @@ class QuestionController extends GetxController {
 
     categories.where((qc) => qc.isActive).forEach((element) {
       activeQuestions.addAll(getQuestionsByCategory(element));
-      if (element.value == QuestionCategory.personalizada) {
-        activeQuestions.addAll(customQuestionList);
+      if (insertQustomCuestion.value) {
+        var matchlist = customQuestionList
+            .where((customQ) => customQ.category == element.value)
+            .toList();
+
+        activeQuestions.addAll(matchlist);
       }
     });
     activeQuestions.refresh();
@@ -57,8 +64,7 @@ class QuestionController extends GetxController {
     categories.refresh();
   }
 
-  void addCustomQuestion(String questionText) {
-    customQuestionList
-        .add(Question(questionText, QuestionCategory.personalizada));
+  void addCustomQuestion(String questionText, String qc) {
+    customQuestionList.add(Question(questionText, qc, isCustom: true));
   }
 }

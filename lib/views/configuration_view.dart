@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
+import 'package:triptolemus/models/category.dart';
 import 'package:triptolemus/widgets/config_view/category_selector.dart';
 import 'package:triptolemus/widgets/config_view/config_play_button.dart';
 
@@ -16,7 +17,7 @@ class ConfigurationView extends StatefulWidget {
 
 class _ConfigurationViewState extends State<ConfigurationView> {
   double _currentSliderValue = 5;
-  bool light = true;
+  bool randomSwitch = true;
 
   @override
   Widget build(BuildContext context) {
@@ -80,15 +81,13 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Switch(
-                    value: light,
-                    activeColor: AppColor.orange,
-                    onChanged: (bool value) {
-                      setState(() {
-                        light = value;
-                      });
-                    },
-                  ),
+                  Obx(() => Switch(
+                        value: questionCtrl.insertQustomCuestion.value,
+                        activeColor: AppColor.orange,
+                        onChanged: (bool value) {
+                          questionCtrl.insertQustomCuestion.value = value;
+                        },
+                      )),
                   const SizedBox(height: 25),
                   const Center(
                     child: Text(
@@ -110,7 +109,7 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                       Expanded(
                           child: CategorySelector(
                               emoji: '😱',
-                              category: questionCtrl.categories[3])),
+                              category: questionCtrl.categories[2])),
                     ],
                   ),
                   Row(
@@ -118,11 +117,11 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                       Expanded(
                           child: CategorySelector(
                               emoji: '👻',
-                              category: questionCtrl.categories[2])),
+                              category: questionCtrl.categories[1])),
                       Expanded(
                           child: CategorySelector(
                               emoji: '🤯',
-                              category: questionCtrl.categories[1])),
+                              category: questionCtrl.categories[3])),
                     ],
                   ),
                   const SizedBox(height: 25),
@@ -137,11 +136,11 @@ class _ConfigurationViewState extends State<ConfigurationView> {
                     ),
                   ),
                   Switch(
-                    value: light,
+                    value: randomSwitch,
                     activeColor: AppColor.orange,
                     onChanged: (bool value) {
                       setState(() {
-                        light = value;
+                        randomSwitch = value;
                       });
                     },
                   )

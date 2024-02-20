@@ -14,5 +14,5 @@ class QuestionCategory {
   static const String picante = "Picante";
   static const String dilemas = "Dilemas";
   static const String confidenciales = "Confidenciales";
-  static const String personalizada = "Personalizada";
+  static const String personalizadas = "Personalizadas";
 }

@@ -61,9 +61,9 @@ class CategorySelector extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    category.value != QuestionCategory.personalizada
+                    category.value != QuestionCategory.personalizadas
                         ? category.value
-                        : "Solo " + category.value + "s",
+                        : "Solo " + category.value,
                     style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

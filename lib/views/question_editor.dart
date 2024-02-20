@@ -152,7 +152,8 @@ class _QuestionEditorState extends State<QuestionEditor> {
           child: const Icon(Icons.done),
           onPressed: () {
             if (textController.text.isNotEmpty) {
-              questionCtrl.addCustomQuestion(textController.text);
+              questionCtrl.addCustomQuestion(
+                  textController.text, selectedContainer);
             }
             Get.back();
           }),
