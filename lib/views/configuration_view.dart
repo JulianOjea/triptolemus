@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
-import 'package:triptolemus/models/category.dart';
 import 'package:triptolemus/widgets/config_view/category_selector.dart';
 import 'package:triptolemus/widgets/config_view/config_play_button.dart';
 
@@ -15,14 +14,27 @@ class ConfigurationView extends StatefulWidget {
   State<ConfigurationView> createState() => _ConfigurationViewState();
 }
 
-class _ConfigurationViewState extends State<ConfigurationView> {
+class _ConfigurationViewState extends State<ConfigurationView>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+
   double _currentSliderValue = 5;
   bool randomSwitch = true;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final questionCtrl = Get.find<QuestionController>();
-    //final playerCtrl = Get.find<PlayerController>();
 
     TextEditingController textController = TextEditingController();
 
@@ -37,121 +49,155 @@ class _ConfigurationViewState extends State<ConfigurationView> {
         ),
       ),
       backgroundColor: AppColor.blue,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        children: [
+          Expanded(
+              child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              PageView(
+                onPageChanged: (value) {
+                  _tabController.index = value;
+                  setState(() {});
+                },
                 children: [
-                  const Text(
-                    "¿Cuantas rondas quieres jugar?",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 25),
-                  Container(
-                      height: 20,
-                      child: SliderTheme(
-                        data: SliderThemeData(trackHeight: 10),
-                        child: Slider(
-                            activeColor: AppColor.orange,
-                            value: _currentSliderValue,
-                            max: 10,
-                            divisions: 10,
-                            label: _currentSliderValue.round().toString(),
-                            onChanged: (double value) {
-                              setState(() {
-                                _currentSliderValue = value;
-                                textController.text = value.toString();
-                              });
-                            }),
-                      )),
-                  SizedBox(height: 25),
-                  const Center(
-                    child: Text(
-                      "¿Quieres jugar con tus preguntas personalizadas?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Obx(() => Switch(
-                        value: questionCtrl.insertQustomCuestion.value,
-                        activeColor: AppColor.orange,
-                        onChanged: (bool value) {
-                          questionCtrl.insertQustomCuestion.value = value;
-                        },
-                      )),
-                  const SizedBox(height: 25),
-                  const Center(
-                    child: Text(
-                      "¿Con qué categorías te gustaría jugar?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  Row(
+                  Column(
                     children: [
-                      Expanded(
-                          child: CategorySelector(
-                              emoji: '🤔',
-                              category: questionCtrl.categories[0])),
-                      Expanded(
-                          child: CategorySelector(
-                              emoji: '😱',
-                              category: questionCtrl.categories[2])),
+                      customSelector(questionCtrl),
+                      categoryBoxSelectors(questionCtrl),
                     ],
                   ),
-                  Row(
+                  Column(
                     children: [
-                      Expanded(
-                          child: CategorySelector(
-                              emoji: '👻',
-                              category: questionCtrl.categories[1])),
-                      Expanded(
-                          child: CategorySelector(
-                              emoji: '🤯',
-                              category: questionCtrl.categories[3])),
+                      nRoundSelector(textController),
+                      randomSelector(),
                     ],
                   ),
-                  const SizedBox(height: 25),
-                  const Center(
-                    child: Text(
-                      "¿Orden aleatorio de jugadores?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Switch(
-                    value: randomSwitch,
-                    activeColor: AppColor.orange,
-                    onChanged: (bool value) {
-                      setState(() {
-                        randomSwitch = value;
-                      });
-                    },
-                  )
                 ],
               ),
-            ),
-            const SizedBox(height: 25),
-            ConfigPlayButton()
+              TabPageSelector(
+                controller: _tabController,
+              )
+            ],
+          )),
+          ConfigPlayButton()
+        ],
+      ),
+    );
+  }
+
+  Column randomSelector() {
+    return Column(
+      children: [
+        const Center(
+          child: Text(
+            "¿Orden aleatorio de jugadores?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Switch(
+          value: randomSwitch,
+          activeColor: AppColor.orange,
+          onChanged: (bool value) {
+            setState(() {
+              randomSwitch = value;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Column categoryBoxSelectors(QuestionController questionCtrl) {
+    return Column(
+      children: [
+        const Center(
+          child: Text(
+            "¿Con qué categorías te gustaría jugar?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(height: 25),
+        Row(
+          children: [
+            Expanded(
+                child: CategorySelector(
+                    emoji: '🤔', category: questionCtrl.categories[0])),
+            Expanded(
+                child: CategorySelector(
+                    emoji: '😱', category: questionCtrl.categories[2])),
           ],
         ),
-      ),
+        Row(
+          children: [
+            Expanded(
+                child: CategorySelector(
+                    emoji: '👻', category: questionCtrl.categories[1])),
+            Expanded(
+                child: CategorySelector(
+                    emoji: '🤯', category: questionCtrl.categories[3])),
+          ],
+        ),
+        const SizedBox(height: 25),
+      ],
+    );
+  }
+
+  Column customSelector(QuestionController questionCtrl) {
+    return Column(
+      children: [
+        const Center(
+          child: Text(
+            "¿Quieres jugar con tus preguntas personalizadas?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Obx(() => Switch(
+              value: questionCtrl.insertQustomCuestion.value,
+              activeColor: AppColor.orange,
+              onChanged: (bool value) {
+                questionCtrl.insertQustomCuestion.value = value;
+              },
+            )),
+        const SizedBox(height: 25),
+      ],
+    );
+  }
+
+  Column nRoundSelector(TextEditingController textController) {
+    return Column(
+      children: [
+        const Text(
+          "¿Cuantas rondas quieres jugar?",
+          style: TextStyle(
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 25),
+        SizedBox(
+            height: 20,
+            child: SliderTheme(
+              data: const SliderThemeData(trackHeight: 10),
+              child: Slider(
+                  activeColor: AppColor.orange,
+                  value: _currentSliderValue,
+                  max: 10,
+                  divisions: 10,
+                  label: _currentSliderValue.round().toString(),
+                  onChanged: (double value) {
+                    setState(() {
+                      _currentSliderValue = value;
+                      textController.text = value.toString();
+                    });
+                  }),
+            )),
+        const SizedBox(height: 25),
+      ],
     );
   }
 }
