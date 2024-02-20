@@ -30,17 +30,21 @@ class QuestionController extends GetxController {
 
   void setActiveQuestionsList() {
     activeQuestions.clear();
+    if (categories[3].isActive) {
+      activeQuestions.addAll(customQuestionList);
+    } else {
+      categories.where((qc) => qc.isActive).forEach((element) {
+        activeQuestions.addAll(getQuestionsByCategory(element));
+        if (insertQustomCuestion.value) {
+          var matchlist = customQuestionList
+              .where((customQ) => customQ.category == element.value)
+              .toList();
 
-    categories.where((qc) => qc.isActive).forEach((element) {
-      activeQuestions.addAll(getQuestionsByCategory(element));
-      if (insertQustomCuestion.value) {
-        var matchlist = customQuestionList
-            .where((customQ) => customQ.category == element.value)
-            .toList();
+          activeQuestions.addAll(matchlist);
+        }
+      });
+    }
 
-        activeQuestions.addAll(matchlist);
-      }
-    });
     activeQuestions.refresh();
   }
 
@@ -61,6 +65,15 @@ class QuestionController extends GetxController {
   void swichActive(QuestionCategory cat) {
     QuestionCategory qc = getCategoryByName(cat.value);
     qc.isActive = !qc.isActive;
+
+    if (cat.value == QuestionCategory.personalizadas) {
+      categories[0].isActive = false;
+      categories[1].isActive = false;
+      categories[2].isActive = false;
+      insertQustomCuestion.value = true;
+    } else {
+      categories[3].isActive = false;
+    }
     categories.refresh();
   }
 
