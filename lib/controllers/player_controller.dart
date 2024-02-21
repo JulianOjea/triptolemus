@@ -9,6 +9,7 @@ class PlayerController extends GetxController {
   var actualRound = 0;
   var nRounds = 0.obs;
   var isEditingPlayer = false.obs;
+  var isRandomSort = false.obs;
 
   bool getIsEditingPlayer() {
     return isEditingPlayer.value;
@@ -47,9 +48,9 @@ class PlayerController extends GetxController {
   }
 
   bool nextRound() {
-    if (index.value == playerList.length - 1) {
+    if (actualRound <= nRounds.value * playerList.length) {
       actualRound++;
-      if (actualRound > nRounds.value) {
+      if (actualRound == nRounds.value * playerList.length) {
         return false;
       }
     }

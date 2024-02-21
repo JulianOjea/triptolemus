@@ -20,7 +20,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
   late TabController _tabController;
 
   double _currentSliderValue = 5;
-  bool randomSwitch = true;
+
   @override
   void initState() {
     super.initState();
@@ -86,7 +86,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
                       const SizedBox(
                         height: 100,
                       ),
-                      randomSelector(),
+                      randomSelector(playerController),
                     ],
                   ),
                 ],
@@ -106,7 +106,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
     );
   }
 
-  Column randomSelector() {
+  Column randomSelector(PlayerController playerController) {
     return Column(
       children: [
         const Center(
@@ -118,11 +118,11 @@ class _ConfigurationViewState extends State<ConfigurationView>
           ),
         ),
         Switch(
-          value: randomSwitch,
+          value: playerController.isRandomSort.value,
           activeColor: AppColor.orange,
           onChanged: (bool value) {
             setState(() {
-              randomSwitch = value;
+              playerController.isRandomSort.value = value;
             });
           },
         ),
