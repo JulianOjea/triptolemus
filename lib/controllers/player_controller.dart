@@ -34,7 +34,18 @@ class PlayerController extends GetxController {
   }
 
   void nextPlayer() {
-    index < playerList.length - 1 ? index.value++ : index.value = 0;
+    if (isRandomSort.value) {
+      getRandomIndex();
+    } else {
+      index < playerList.length - 1 ? index.value++ : index.value = 0;
+    }
+  }
+
+  void getRandomIndex() {
+    Random random = Random();
+    int randomNumber = random.nextInt(playerList.length);
+    index.value = randomNumber;
+    print(index);
   }
 
   Player getRandomPlayerWithoutActual() {
@@ -66,7 +77,11 @@ class PlayerController extends GetxController {
   }
 
   void resetIndex() {
-    index.value = 0;
+    if (isRandomSort.value) {
+      getRandomIndex();
+    } else {
+      index.value = 0;
+    }
   }
 
   void setPlayerValueAt(value, index) {

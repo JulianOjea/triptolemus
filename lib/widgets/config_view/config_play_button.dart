@@ -20,7 +20,7 @@ class ConfigPlayButton extends StatelessWidget {
               : () {
                   questionCtrl.setActiveQuestionsList();
                   playerCtrl.actualRound = 0;
-                  playerCtrl.index.value = 0;
+                  playerCtrl.resetIndex();
                   Navigator.pushNamed(context, "game");
                 },
           child: Container(
