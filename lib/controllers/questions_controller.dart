@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:triptolemus/data/questions.dart';
 import 'package:triptolemus/models/category.dart';
 import 'package:triptolemus/models/question.dart';
@@ -21,6 +24,8 @@ class QuestionController extends GetxController {
 
   // custom question switch state
   var insertQustomCuestion = false.obs;
+
+  set database(Future<Database> database) {}
 
   String getQuestionString(String name) {
     final random = Random();
@@ -86,5 +91,41 @@ class QuestionController extends GetxController {
         categories[1].isActive ||
         categories[2].isActive ||
         categories[3].isActive;
+  }
+
+  Future<Database> initQuestionDB() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    print("db inicializando");
+    return openDatabase(
+      join(await getDatabasesPath(), 'question_database.db'),
+      onCreate: (db, version) {
+        print("db created");
+        return db
+            .execute('CREATE TABLE questions(text_column text, category text)');
+      },
+      onOpen: (db) => print("db opened"),
+      version: 1,
+    );
+  }
+
+  Future<void> insertQuestionOnDB(Question question) async {
+    final db = await initQuestionDB();
+
+    await db.insert('questions', question.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<List<Question>> getQuestionsListOnDB() async {
+    final db = await initQuestionDB();
+
+    final List<Map<String, Object?>> questionMaps = await db.query('questions');
+
+    return [
+      for (final {
+            'text_column': text as String,
+            'category': category as String,
+          } in questionMaps)
+        Question(text, category, isCustom: true),
+    ];
   }
 }

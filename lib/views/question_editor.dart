@@ -4,6 +4,7 @@ import 'package:keyboard_detection/keyboard_detection.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
 import 'package:triptolemus/models/category.dart';
+import 'package:triptolemus/models/question.dart';
 
 class QuestionEditor extends StatefulWidget {
   const QuestionEditor({super.key});
@@ -154,6 +155,9 @@ class _QuestionEditorState extends State<QuestionEditor> {
             if (textController.text.isNotEmpty) {
               questionCtrl.addCustomQuestion(
                   textController.text, selectedContainer);
+              Question q = Question(textController.text, selectedContainer,
+                  isCustom: true);
+              questionCtrl.insertQuestionOnDB(q);
             }
             Get.back();
           }),
