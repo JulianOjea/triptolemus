@@ -33,7 +33,12 @@ class QuestionController extends GetxController {
     return question.text.replaceAll("%name%", name).replaceAll('😏', name);
   }
 
-  void setActiveQuestionsList() {
+  Future setActiveQuestionsList() async {
+    if (customQuestionList.isEmpty) {
+      var qlist = await getQuestionsListOnDB();
+      customQuestionList.addAll(qlist);
+    }
+
     activeQuestions.clear();
     if (categories[3].isActive) {
       activeQuestions.addAll(customQuestionList);

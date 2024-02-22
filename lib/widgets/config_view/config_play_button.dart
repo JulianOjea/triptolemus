@@ -17,8 +17,8 @@ class ConfigPlayButton extends StatelessWidget {
         () => GestureDetector(
           onTap: !questionCtrl.isAnyCatSelected()
               ? null
-              : () {
-                  questionCtrl.setActiveQuestionsList();
+              : () async {
+                  await questionCtrl.setActiveQuestionsList();
                   playerCtrl.actualRound = 0;
                   playerCtrl.resetIndex();
                   Navigator.pushNamed(context, "game");
