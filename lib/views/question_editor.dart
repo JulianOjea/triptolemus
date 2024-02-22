@@ -7,7 +7,17 @@ import 'package:triptolemus/models/category.dart';
 import 'package:triptolemus/models/question.dart';
 
 class QuestionEditor extends StatefulWidget {
-  const QuestionEditor({super.key});
+  final bool isCreating;
+  final String questionText;
+  final String category;
+  final int questionId;
+
+  const QuestionEditor(
+      {super.key,
+      this.isCreating = true,
+      this.questionText = "",
+      this.category = "",
+      this.questionId = 0});
 
   @override
   State<QuestionEditor> createState() => _QuestionEditorState();
@@ -18,6 +28,16 @@ class _QuestionEditorState extends State<QuestionEditor> {
   bool isEditing = false;
   var fieldvalue = "";
   String selectedContainer = QuestionCategory.dilemas;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (!widget.isCreating) {
+      textController.text = widget.questionText;
+      selectedContainer = widget.category;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +55,18 @@ class _QuestionEditorState extends State<QuestionEditor> {
       }),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Nueva pregunta"),
+          title: const Text("Nueva pregunta"),
+          actions: !widget.isCreating
+              ? [
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      questionCtrl.deleteQuestion(widget.questionId);
+                      Get.back(result: true);
+                    },
+                  )
+                ]
+              : [],
         ),
         backgroundColor: AppColor.blue,
         body: Column(
@@ -151,15 +182,24 @@ class _QuestionEditorState extends State<QuestionEditor> {
             padding: const EdgeInsets.all(0), // Ajusta el padding a 0
           ),
           child: const Icon(Icons.done),
-          onPressed: () {
+          onPressed: () async {
             if (textController.text.isNotEmpty) {
-              questionCtrl.addCustomQuestion(
-                  textController.text, selectedContainer);
-              Question q = Question(textController.text, selectedContainer,
-                  isCustom: true);
-              questionCtrl.insertQuestionOnDB(q);
+              if (widget.isCreating) {
+                // questionCtrl.addCustomQuestion(
+                //     textController.text, selectedContainer);
+                Question q = Question(textController.text, selectedContainer,
+                    isCustom: true);
+                questionCtrl.insertQuestionOnDB(q);
+              } else {
+                Question q = Question(textController.text, selectedContainer,
+                    isCustom: true, questionId: widget.questionId);
+                await questionCtrl.updateQuestion(q);
+              }
+            } else {
+              //TODO DO SOMETHING WHEN IS EMPTY
             }
-            Get.back();
+            print("lo hace");
+            Get.back(result: true);
           }),
     );
   }

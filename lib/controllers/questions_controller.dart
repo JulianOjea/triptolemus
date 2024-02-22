@@ -95,15 +95,12 @@ class QuestionController extends GetxController {
 
   Future<Database> initQuestionDB() async {
     WidgetsFlutterBinding.ensureInitialized();
-    print("db inicializando");
     return openDatabase(
       join(await getDatabasesPath(), 'question_database.db'),
       onCreate: (db, version) {
-        print("db created");
         return db
             .execute('CREATE TABLE questions(text_column text, category text)');
       },
-      onOpen: (db) => print("db opened"),
       version: 1,
     );
   }
@@ -118,14 +115,37 @@ class QuestionController extends GetxController {
   Future<List<Question>> getQuestionsListOnDB() async {
     final db = await initQuestionDB();
 
-    final List<Map<String, Object?>> questionMaps = await db.query('questions');
+    final List<Map<String, Object?>> questionMaps = await db
+        .query('questions', columns: ["rowid", "text_column", "category"]);
 
     return [
       for (final {
             'text_column': text as String,
             'category': category as String,
+            'rowid': rowid as int,
           } in questionMaps)
-        Question(text, category, isCustom: true),
+        Question(text, category, isCustom: true, questionId: rowid),
     ];
+  }
+
+  Future<void> updateQuestion(Question question) async {
+    final db = await initQuestionDB();
+
+    await db.update(
+      'questions',
+      question.toMap(),
+      where: 'rowid = ?',
+      whereArgs: [question.questionId],
+    );
+  }
+
+  Future<void> deleteQuestion(int id) async {
+    final db = await initQuestionDB();
+
+    await db.delete(
+      'questions',
+      where: 'rowid = ?',
+      whereArgs: [id],
+    );
   }
 }
