@@ -124,7 +124,7 @@ class _RequestContainerState extends State<RequestContainer>
         )
         .then()
         .move(
-            curve: Curves.elasticInOut,
+            curve: Curves.elasticOut,
             end: const Offset(400, 200),
             duration: 700.ms);
   }

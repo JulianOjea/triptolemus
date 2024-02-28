@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 import 'package:triptolemus/constants/colors.dart';
@@ -56,6 +57,8 @@ class PlayerListInputText extends StatelessWidget {
             hintText: 'Escribe un nombre',
             hintStyle: TextStyle(color: AppColor.contrast)),
       ),
-    );
+    )
+        .animate()
+        .moveY(begin: 800, end: 0, duration: 300.ms, curve: Curves.easeInCubic);
   }
 }

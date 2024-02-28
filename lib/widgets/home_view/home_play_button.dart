@@ -17,9 +17,9 @@ class HomePlayButton extends StatelessWidget {
         glowSize: 10,
         borderRadius: const BorderRadius.all(Radius.circular(1)),
         gradientColors: const [
-          Colors.transparent,
-          Colors.transparent,
-          Colors.transparent,
+          Colors.redAccent,
+          AppColor.contrast,
+          Colors.yellow,
           AppColor.secondary,
         ],
         child: Container(

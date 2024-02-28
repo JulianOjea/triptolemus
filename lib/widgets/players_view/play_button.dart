@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
@@ -30,12 +31,20 @@ class PlayButton extends StatelessWidget {
           margin: const EdgeInsets.all(10.0),
           width: double.infinity,
           height: 60,
-          child: const Icon(
-            Icons.settings,
-            size: 50,
-            color: AppColor.contrast,
+          child: Container(
+            alignment: Alignment.centerRight,
+            child: const Icon(
+              Icons.navigate_next,
+              size: 50,
+              color: AppColor.contrast,
+            ),
           ),
-        ),
+        ).animate().moveX(
+              begin: -200,
+              end: 0,
+              curve: Curves.easeInCubic,
+              duration: 300.ms,
+            ),
       ),
     );
   }
