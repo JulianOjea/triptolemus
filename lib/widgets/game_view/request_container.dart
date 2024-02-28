@@ -29,6 +29,7 @@ class _RequestContainerState extends State<RequestContainer>
   final playerCrtl = Get.find<PlayerController>();
   final questionCrtl = Get.find<QuestionController>();
   late String questionText;
+  var _isAnimating = false;
 
   @override
   void initState() {
@@ -51,17 +52,21 @@ class _RequestContainerState extends State<RequestContainer>
     return Column(
       children: [
         GestureDetector(
-            onTap: () {
-              if (playerCrtl.nextRound()) {
-                _animationCtrl.reset();
-                _animationCtrl.forward();
-                widget.animationTextCtrl.reset();
-                widget.animationTextCtrlEnd.reset();
-                widget.animationTextCtrl.forward();
-              } else {
-                Navigator.pushNamed(context, "configuration");
-              }
-            },
+            onTap: !_isAnimating
+                ? () {
+                    _isAnimating = true;
+                    setState(() {});
+                    if (playerCrtl.nextRound()) {
+                      _animationCtrl.reset();
+                      _animationCtrl.forward();
+                      widget.animationTextCtrl.reset();
+                      widget.animationTextCtrlEnd.reset();
+                      widget.animationTextCtrl.forward();
+                    } else {
+                      Navigator.pushNamed(context, "configuration");
+                    }
+                  }
+                : null,
             child: animatedContainer(questionCrtl, playerCrtl, _animationCtrl)),
         const SizedBox(
           height: 50,
@@ -95,7 +100,8 @@ class _RequestContainerState extends State<RequestContainer>
             controller: animationCtrl,
             autoPlay: false,
             onComplete: (_) {
-              // _animationCtrlEnd.forward();
+              _isAnimating = false;
+              setState(() {});
             })
         .move(
             curve: Curves.elasticInOut,
