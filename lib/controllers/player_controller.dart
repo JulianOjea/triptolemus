@@ -7,7 +7,7 @@ class PlayerController extends GetxController {
   final playerList = <Player>[].obs;
   var index = 0.obs;
   var actualRound = 0;
-  var nRounds = 0.obs;
+  var nRounds = 5.obs;
   var isEditingPlayer = false.obs;
   var isRandomSort = false.obs;
 
