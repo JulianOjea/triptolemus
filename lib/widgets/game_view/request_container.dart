@@ -49,13 +49,8 @@ class _RequestContainerState extends State<RequestContainer>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        animatedContainer(questionCrtl, playerCrtl, _animationCtrl),
-        const SizedBox(
-          height: 50,
-        ),
-        FloatingActionButton(
-            child: const Icon(Icons.add_road),
-            onPressed: () {
+        GestureDetector(
+            onTap: () {
               if (playerCrtl.nextRound()) {
                 _animationCtrl.reset();
                 _animationCtrl.forward();
@@ -65,7 +60,11 @@ class _RequestContainerState extends State<RequestContainer>
               } else {
                 Navigator.pushNamed(context, "configuration");
               }
-            })
+            },
+            child: animatedContainer(questionCrtl, playerCrtl, _animationCtrl)),
+        const SizedBox(
+          height: 50,
+        )
       ],
     );
   }
