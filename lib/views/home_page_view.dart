@@ -14,7 +14,7 @@ class HomePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColor.background,
       body: Stack(
         children: [
@@ -24,14 +24,37 @@ class HomePageView extends StatelessWidget {
           //           image: AssetImage("assets/test.jpeg"), fit: BoxFit.cover)),
           // ),
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
+              alignment: Alignment.topCenter,
               children: [
-                HomePlayButton(),
-                SizedBox(
-                  height: 20,
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Container(
+                        alignment: Alignment.topCenter,
+                        height: 100,
+                        width: 100,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/logo1.jpeg'),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: BoxShape.circle,
+                        )),
+                  ],
                 ),
-                HomeCustomQuestionButton()
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    HomePlayButton(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    HomeCustomQuestionButton()
+                  ],
+                ),
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glowy_borders/glowy_borders.dart';
 import 'package:triptolemus/constants/colors.dart';
 
 class HomePlayButton extends StatelessWidget {
@@ -11,21 +12,32 @@ class HomePlayButton extends StatelessWidget {
       onTap: () {
         Get.toNamed('/players');
       },
-      child: Container(
-        height: 100,
-        width: 100,
-        decoration: const BoxDecoration(
-            color: AppColor.primary,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(5),
-              topRight: Radius.circular(5),
-              bottomLeft: Radius.circular(5),
-              bottomRight: Radius.circular(5),
-            )),
-        child: const Icon(
-          Icons.play_arrow_rounded,
-          size: 80,
-          color: AppColor.contrast,
+      child: AnimatedGradientBorder(
+        borderSize: 2,
+        glowSize: 10,
+        borderRadius: const BorderRadius.all(Radius.circular(1)),
+        gradientColors: const [
+          Colors.transparent,
+          Colors.transparent,
+          Colors.transparent,
+          AppColor.secondary,
+        ],
+        child: Container(
+          height: 100,
+          width: 100,
+          decoration: const BoxDecoration(
+              color: AppColor.primary,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              )),
+          child: const Icon(
+            Icons.play_arrow_rounded,
+            size: 80,
+            color: AppColor.contrast,
+          ),
         ),
       ),
     );
