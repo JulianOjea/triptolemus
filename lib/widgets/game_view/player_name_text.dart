@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -20,12 +21,22 @@ class _PlayerNameTextState extends State<PlayerNameText>
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Text(
+    return Obx(
+      () => Container(
+        height: 200,
+        padding: const EdgeInsets.all(10),
+        alignment: Alignment.center,
+        child: AutoSizeText(
+          textAlign: TextAlign.center,
           playerCtrl.playerList[playerCtrl.index.value].name.toUpperCase(),
+          softWrap: true,
+          maxLines: 2,
+          minFontSize: 20.0,
           style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 70,
               color: AppColor.contrast),
+          overflow: TextOverflow.ellipsis,
         )
             .animate(
               controller: widget.animationCtrl,
@@ -37,10 +48,12 @@ class _PlayerNameTextState extends State<PlayerNameText>
               },
             )
             .moveX(
-                curve: Curves.easeOutExpo, begin: 0, end: 300, duration: 700.ms)
+                curve: Curves.easeOutExpo, begin: 0, end: 400, duration: 700.ms)
             .then()
             .animate(controller: widget.animationCtrlEnd, autoPlay: false)
             .moveX(end: -600, duration: 0.ms)
-            .moveX(curve: Curves.decelerate, end: 300, duration: 700.ms));
+            .moveX(curve: Curves.decelerate, end: 200, duration: 700.ms),
+      ),
+    );
   }
 }
