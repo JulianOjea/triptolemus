@@ -55,10 +55,16 @@ class _QuestionEditorState extends State<QuestionEditor> {
       }),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Nueva pregunta"),
+          iconTheme: const IconThemeData(color: AppColor.contrast),
+          title: const Text(
+            "Nueva pregunta",
+            style: TextStyle(color: AppColor.contrast),
+          ),
+          backgroundColor: AppColor.background,
           actions: !widget.isCreating
               ? [
                   IconButton(
+                    color: AppColor.contrast,
                     icon: const Icon(Icons.delete),
                     onPressed: () {
                       questionCtrl.deleteQuestion(widget.questionId);
@@ -68,7 +74,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
                 ]
               : [],
         ),
-        backgroundColor: AppColor.blue,
+        backgroundColor: AppColor.background,
         body: Column(
           children: [
             Expanded(
@@ -117,8 +123,8 @@ class _QuestionEditorState extends State<QuestionEditor> {
         width: double.infinity,
         decoration: BoxDecoration(
             color: selectedContainer == container_text
-                ? Colors.white
-                : AppColor.orange,
+                ? AppColor.primary
+                : AppColor.secondary,
             borderRadius: const BorderRadius.all(Radius.circular(5))),
         child: Stack(
           children: [
@@ -128,7 +134,10 @@ class _QuestionEditorState extends State<QuestionEditor> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   emoji,
-                  style: TextStyle(fontSize: 29, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 29,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.contrast),
                 ),
               ),
             ),
@@ -136,7 +145,10 @@ class _QuestionEditorState extends State<QuestionEditor> {
               alignment: Alignment.center,
               child: Text(
                 container_text,
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.contrast),
               ),
             )
           ],
@@ -157,7 +169,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
         height: 60,
         width: double.infinity,
         decoration: const BoxDecoration(
-            color: AppColor.orange,
+            color: AppColor.primary,
             borderRadius: BorderRadius.all(Radius.circular(5))),
         child: const Center(
             child: Text(
@@ -175,13 +187,17 @@ class _QuestionEditorState extends State<QuestionEditor> {
       width: 60.0,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            backgroundColor: AppColor.secondary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
                   10.0), // Personaliza el radio según tus necesidades
             ),
             padding: const EdgeInsets.all(0), // Ajusta el padding a 0
           ),
-          child: const Icon(Icons.done),
+          child: const Icon(
+            Icons.done,
+            color: AppColor.contrast,
+          ),
           onPressed: () async {
             if (textController.text.isNotEmpty) {
               if (widget.isCreating) {
@@ -198,7 +214,6 @@ class _QuestionEditorState extends State<QuestionEditor> {
             } else {
               //TODO DO SOMETHING WHEN IS EMPTY
             }
-            print("lo hace");
             Get.back(result: true);
           }),
     );
@@ -208,7 +223,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
-          color: AppColor.orange,
+          color: AppColor.primary,
           borderRadius: BorderRadius.all(Radius.circular(5))),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -218,7 +233,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
           ),
-          style: TextStyle(fontSize: 17),
+          style: TextStyle(fontSize: 17, color: AppColor.contrast),
           keyboardType: TextInputType.multiline,
           maxLines: 5,
         ),

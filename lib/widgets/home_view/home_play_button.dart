@@ -15,7 +15,7 @@ class HomePlayButton extends StatelessWidget {
         height: 100,
         width: 100,
         decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColor.primary,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5),
@@ -25,7 +25,7 @@ class HomePlayButton extends StatelessWidget {
         child: const Icon(
           Icons.play_arrow_rounded,
           size: 80,
-          color: AppColor.orange,
+          color: AppColor.contrast,
         ),
       ),
     );

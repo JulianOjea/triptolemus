@@ -22,21 +22,14 @@ class PlayerListInputText extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
       height: 60.0,
-      decoration: BoxDecoration(
-        color: AppColor.orange,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-          bottomLeft: Radius.circular(15),
-          bottomRight: Radius.circular(15),
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black.withOpacity(0.10),
-              offset: const Offset(0, 10),
-              blurRadius: 5),
-        ],
-      ),
+      decoration: const BoxDecoration(
+          color: AppColor.primary,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          )),
       child: TextField(
         onChanged: (val) {
           playerCtrl.setPlayerValueAt(val, index);
@@ -46,15 +39,22 @@ class PlayerListInputText extends StatelessWidget {
         },
         controller: textController,
         textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: AppColor.contrast),
         decoration: InputDecoration(
             suffixIcon: IconButton(
-              icon: Icon(Icons.remove),
+              icon: const Icon(
+                Icons.remove,
+                color: AppColor.contrast,
+              ),
               onPressed: () => playerCtrl.removeAt(index),
             ),
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
-            hintText: 'Escribe un nombre'),
+            hintText: 'Escribe un nombre',
+            hintStyle: TextStyle(color: AppColor.contrast)),
       ),
     );
   }

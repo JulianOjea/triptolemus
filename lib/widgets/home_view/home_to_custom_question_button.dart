@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:triptolemus/constants/colors.dart';
 
 class HomeCustomQuestionButton extends StatelessWidget {
   const HomeCustomQuestionButton({super.key});
@@ -12,7 +13,7 @@ class HomeCustomQuestionButton extends StatelessWidget {
         height: 50,
         width: 200,
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColor.primary,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(5),
             topRight: Radius.circular(5),
@@ -23,7 +24,10 @@ class HomeCustomQuestionButton extends StatelessWidget {
         child: const Center(
             child: Text(
           "Mis preguntas",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: AppColor.contrast),
         )),
       ),
     );

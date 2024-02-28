@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
 
 class PlayerNameText extends StatefulWidget {
@@ -22,7 +23,9 @@ class _PlayerNameTextState extends State<PlayerNameText>
     return Obx(() => Text(
           playerCtrl.playerList[playerCtrl.index.value].name.toUpperCase(),
           style: const TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 70, color: Colors.white),
+              fontWeight: FontWeight.bold,
+              fontSize: 70,
+              color: AppColor.contrast),
         )
             .animate(
               controller: widget.animationCtrl,

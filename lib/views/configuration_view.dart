@@ -43,14 +43,20 @@ class _ConfigurationViewState extends State<ConfigurationView>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: AppColor.blue,
+        backgroundColor: AppColor.background,
+        iconTheme: const IconThemeData(
+          color: AppColor.contrast, //change your color here
+        ),
         title: const Text(
           "Configura tu partida",
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+              color: AppColor.contrast),
         ),
       ),
-      backgroundColor: AppColor.blue,
+      backgroundColor: AppColor.background,
       body: Column(
         children: [
           Expanded(
@@ -93,8 +99,8 @@ class _ConfigurationViewState extends State<ConfigurationView>
               ),
               TabPageSelector(
                 controller: _tabController,
-                color: Colors.black26,
-                selectedColor: AppColor.orange,
+                color: AppColor.secondary,
+                selectedColor: AppColor.primary,
                 indicatorSize: 16,
                 borderStyle: BorderStyle.none,
               )
@@ -114,12 +120,16 @@ class _ConfigurationViewState extends State<ConfigurationView>
             "¿Orden aleatorio de jugadores?",
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+                color: AppColor.contrast,
+                fontSize: 25,
+                fontWeight: FontWeight.bold),
           ),
         ),
         Switch(
+          inactiveThumbColor: AppColor.secondary,
+          inactiveTrackColor: AppColor.primary,
           value: playerController.isRandomSort.value,
-          activeColor: AppColor.orange,
+          activeColor: AppColor.primary,
           onChanged: (bool value) {
             setState(() {
               playerController.isRandomSort.value = value;
@@ -139,7 +149,9 @@ class _ConfigurationViewState extends State<ConfigurationView>
             "¿Con qué categorías te gustaría jugar?",
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+                color: AppColor.contrast,
+                fontSize: 25,
+                fontWeight: FontWeight.bold),
           ),
         ),
         const SizedBox(height: 25),
@@ -160,12 +172,16 @@ class _ConfigurationViewState extends State<ConfigurationView>
             "¿Quieres jugar con tus preguntas personalizadas?",
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+                color: AppColor.contrast,
+                fontSize: 25,
+                fontWeight: FontWeight.bold),
           ),
         ),
         Obx(() => Switch(
+              inactiveThumbColor: AppColor.secondary,
+              inactiveTrackColor: AppColor.primary,
               value: questionCtrl.insertQustomCuestion.value,
-              activeColor: AppColor.orange,
+              activeColor: AppColor.primary,
               onChanged: (bool value) {
                 questionCtrl.insertQustomCuestion.value = value;
               },
@@ -182,7 +198,9 @@ class _ConfigurationViewState extends State<ConfigurationView>
         const Text(
           "¿Cuantas rondas quieres jugar?",
           style: TextStyle(
-              color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+              color: AppColor.contrast,
+              fontSize: 25,
+              fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 25),
         SizedBox(
@@ -190,7 +208,8 @@ class _ConfigurationViewState extends State<ConfigurationView>
             child: SliderTheme(
               data: const SliderThemeData(trackHeight: 10),
               child: Slider(
-                  activeColor: AppColor.orange,
+                  activeColor: AppColor.primary,
+                  inactiveColor: AppColor.secondary,
                   value: _currentSliderValue,
                   max: 10,
                   divisions: 10,

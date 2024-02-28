@@ -20,7 +20,7 @@ class PlayButton extends StatelessWidget {
         },
         child: Container(
           decoration: const BoxDecoration(
-              color: AppColor.blue2,
+              color: AppColor.secondary,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(5),
                 topRight: Radius.circular(5),
@@ -31,9 +31,9 @@ class PlayButton extends StatelessWidget {
           width: double.infinity,
           height: 60,
           child: const Icon(
-            Icons.arrow_right,
+            Icons.settings,
             size: 50,
-            color: AppColor.orange,
+            color: AppColor.contrast,
           ),
         ),
       ),

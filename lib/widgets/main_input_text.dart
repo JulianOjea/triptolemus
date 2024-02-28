@@ -25,24 +25,22 @@ class MainInputText extends StatelessWidget {
       padding: const EdgeInsets.only(top: 2, left: 5, bottom: 2, right: 20),
       height: 60.0,
       decoration: BoxDecoration(
-        color: AppColor.orange,
+        color: AppColor.primary,
         borderRadius: borderRadius,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.black.withOpacity(0.10),
-              offset: const Offset(0, 10),
-              blurRadius: 5),
-        ],
       ),
       child: TextField(
         onTap: () => playerCtrl.setIsEditing(false),
         controller: textController,
         textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: AppColor.contrast),
         decoration: InputDecoration(
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
-            hintText: hintText),
+            hintText: hintText,
+            hintStyle: const TextStyle(color: AppColor.contrast)),
       ),
     );
   }

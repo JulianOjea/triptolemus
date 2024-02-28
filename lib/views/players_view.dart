@@ -44,15 +44,21 @@ class _PlayersViewState extends State<PlayersView> {
       }),
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: AppColor.contrast, //change your color here
+          ),
           centerTitle: true,
-          backgroundColor: AppColor.blue,
+          backgroundColor: AppColor.background,
           title: const Text(
             "Jugadores",
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: AppColor.contrast),
           ),
         ),
-        backgroundColor: const Color.fromRGBO(110, 205, 230, 1),
+        backgroundColor: AppColor.background,
         body: Obx(
           () {
             return GestureDetector(
@@ -89,7 +95,8 @@ class _PlayersViewState extends State<PlayersView> {
         child: Center(
             child: Text(
       "Añade 2 jugadores para jugar 😀",
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      style: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.contrast),
     )));
   }
 
@@ -114,12 +121,12 @@ class _PlayersViewState extends State<PlayersView> {
                     key: Key(playerName),
                     background: Container(
                       margin: const EdgeInsets.fromLTRB(0, 10.0, 10.0, 0.0),
-                      color: AppColor.red,
+                      color: AppColor.secondary,
                       child: const Align(
                         alignment: Alignment.centerLeft,
                         child: Icon(
                           Icons.delete,
-                          color: Colors.black,
+                          color: Colors.red,
                         ),
                       ),
                     ),
@@ -162,7 +169,7 @@ class _PlayersViewState extends State<PlayersView> {
             height: 60,
             child: FittedBox(
               child: FloatingActionButton(
-                  backgroundColor: AppColor.red,
+                  backgroundColor: AppColor.secondary,
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(5),
@@ -170,7 +177,10 @@ class _PlayersViewState extends State<PlayersView> {
                     bottomLeft: Radius.circular(5),
                     bottomRight: Radius.circular(5),
                   )),
-                  child: const Icon(Icons.add),
+                  child: const Icon(
+                    Icons.add,
+                    color: AppColor.contrast,
+                  ),
                   onPressed: () {
                     if (mainTextController.text.isNotEmpty) {
                       playerCtrl
@@ -188,19 +198,6 @@ class _PlayersViewState extends State<PlayersView> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class NoPlayers extends StatelessWidget {
-  const NoPlayers({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: const Center(
-        child: Text('Añade 2 jugadors para empezar a jugar! :D'),
       ),
     );
   }

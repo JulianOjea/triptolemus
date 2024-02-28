@@ -15,18 +15,27 @@ class HomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: AppColor.blue,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            HomePlayButton(),
-            SizedBox(
-              height: 20,
+      backgroundColor: AppColor.background,
+      body: Stack(
+        children: [
+          // Container(
+          //   decoration: new BoxDecoration(
+          //       image: DecorationImage(
+          //           image: AssetImage("assets/test.jpeg"), fit: BoxFit.cover)),
+          // ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HomePlayButton(),
+                SizedBox(
+                  height: 20,
+                ),
+                HomeCustomQuestionButton()
+              ],
             ),
-            HomeCustomQuestionButton()
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

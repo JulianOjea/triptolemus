@@ -25,7 +25,7 @@ class ConfigPlayButton extends StatelessWidget {
                 },
           child: Container(
             decoration: const BoxDecoration(
-                color: AppColor.blue2,
+                color: AppColor.primary,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
@@ -37,9 +37,9 @@ class ConfigPlayButton extends StatelessWidget {
             height: 60,
             child: Icon(
               Icons.arrow_right,
-              size: 50,
+              size: 60,
               color: questionCtrl.isAnyCatSelected()
-                  ? AppColor.orange
+                  ? AppColor.contrast
                   : Colors.grey,
             ),
           ),

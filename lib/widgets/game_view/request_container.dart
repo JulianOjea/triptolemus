@@ -74,7 +74,7 @@ class _RequestContainerState extends State<RequestContainer>
       PlayerController playerCrtl, AnimationController animationCtrl) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColor.orange, borderRadius: BorderRadius.circular(20.0)),
+          color: AppColor.primary, borderRadius: BorderRadius.circular(20.0)),
       width: 300,
       height: 300,
       child: Center(
@@ -82,7 +82,9 @@ class _RequestContainerState extends State<RequestContainer>
           textAlign: TextAlign.center,
           questionText,
           style: const TextStyle(
-              color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+              color: AppColor.contrast,
+              fontSize: 30,
+              fontWeight: FontWeight.bold),
         ),
       ),
     )

@@ -34,7 +34,7 @@ class _GameViewState extends State<GameView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.blue,
+      backgroundColor: AppColor.background,
       body: Center(
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),

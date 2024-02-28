@@ -31,22 +31,15 @@ class CategorySelector extends StatelessWidget {
             margin: const EdgeInsets.all(10.0),
             height: 40,
             decoration: BoxDecoration(
-              color: questionCtrl.getCategoryByName(category.value).isActive
-                  ? AppColor.red
-                  : AppColor.orange,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-              ),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.10),
-                    offset: const Offset(0, 10),
-                    blurRadius: 5),
-              ],
-            ),
+                color: questionCtrl.getCategoryByName(category.value).isActive
+                    ? AppColor.primary
+                    : AppColor.secondary,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                )),
             child: Stack(
               children: [
                 Container(
@@ -65,7 +58,7 @@ class CategorySelector extends StatelessWidget {
                         ? category.value
                         : "Solo " + category.value,
                     style: const TextStyle(
-                        color: Colors.black,
+                        color: AppColor.contrast,
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
                   ),

@@ -29,9 +29,16 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
     getQuestions();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Preguntas personalizadas"),
+        backgroundColor: AppColor.background,
+        iconTheme: const IconThemeData(
+          color: AppColor.contrast, //change your color here
+        ),
+        title: const Text(
+          "Preguntas personalizadas",
+          style: TextStyle(color: AppColor.contrast),
+        ),
       ),
-      backgroundColor: AppColor.blue,
+      backgroundColor: AppColor.background,
       body: FutureBuilder(
         future: getQuestions(),
         builder: (context, snapshot) {
@@ -45,7 +52,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
                     child: ListView.separated(
                       separatorBuilder: (BuildContext context, int index) =>
                           const Divider(
-                        color: Colors.black,
+                        color: AppColor.primary,
                       ),
                       itemCount: questionCtrl.customQuestionList.length,
                       itemBuilder: (_, i) {
@@ -69,7 +76,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: AppColor.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               10.0), // Personaliza el radio según tus necesidades
@@ -78,7 +85,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
                       ),
                       child: const Icon(
                         Icons.add,
-                        color: Colors.black,
+                        color: AppColor.contrast,
                       ),
                     ),
                   ),
@@ -108,12 +115,13 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
         }
       },
       child: Container(
-        color: Colors.white,
-        margin: const EdgeInsets.all(10),
+        color: AppColor.background,
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        height: 40,
         alignment: Alignment.centerLeft,
         child: Text(
           question.text,
-          style: const TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20, color: AppColor.contrast),
         ),
       ),
     );
