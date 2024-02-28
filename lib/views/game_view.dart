@@ -39,27 +39,24 @@ class _GameViewState extends State<GameView> with TickerProviderStateMixin {
         backgroundColor: AppColor.background,
       ),
       backgroundColor: AppColor.background,
-      body: Center(
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              PlayerNameText(
-                animationCtrl: _animationTextCtrl,
-                animationCtrlEnd: _animationTextCtrlEnd,
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              RequestContainer(
-                animationTextCtrl: _animationTextCtrl,
-                animationTextCtrlEnd: _animationTextCtrlEnd,
-              ),
-            ],
-          )),
-        ),
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Center(
+            child: Column(
+          children: [
+            PlayerNameText(
+              animationCtrl: _animationTextCtrl,
+              animationCtrlEnd: _animationTextCtrlEnd,
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            RequestContainer(
+              animationTextCtrl: _animationTextCtrl,
+              animationTextCtrlEnd: _animationTextCtrlEnd,
+            ),
+          ],
+        )),
       ),
     );
   }
