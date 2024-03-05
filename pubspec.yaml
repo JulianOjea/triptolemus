@@ -15,6 +15,7 @@ dependencies:
   get: ^4.6.6
   glowy_borders: ^1.0.2
   keyboard_detection: ^0.7.0
+  page_transition: ^2.1.0
   path: ^1.8.3
   provider: ^6.1.1
   sqflite: ^2.3.2

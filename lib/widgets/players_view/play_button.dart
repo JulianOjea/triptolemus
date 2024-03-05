@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
+import 'package:triptolemus/views/configuration_view.dart';
 import 'package:triptolemus/widgets/players_view/player_list_input_text.dart';
 
 class PlayButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class PlayButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           playerCtrl.resetIndex();
-          Get.toNamed('/configuration');
+          Get.to(() => ConfigurationView(), transition: Transition.rightToLeft);
         },
         child: Container(
           decoration: const BoxDecoration(

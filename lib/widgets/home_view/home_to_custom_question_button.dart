@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
+import 'package:triptolemus/views/custom_question_view.dart';
 
 class HomeCustomQuestionButton extends StatelessWidget {
   const HomeCustomQuestionButton({super.key});
@@ -8,7 +9,8 @@ class HomeCustomQuestionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed('/custom_question'),
+      onTap: () =>
+          Get.to(() => const CustomQuestionView(), transition: Transition.size),
       child: Container(
         height: 50,
         width: 200,

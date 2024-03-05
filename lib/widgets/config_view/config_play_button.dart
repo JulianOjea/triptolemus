@@ -4,6 +4,7 @@ import 'package:glowy_borders/glowy_borders.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
+import 'package:triptolemus/views/game_view.dart';
 
 class ConfigPlayButton extends StatelessWidget {
   final questionCtrl = Get.find<QuestionController>();
@@ -22,7 +23,8 @@ class ConfigPlayButton extends StatelessWidget {
                   await questionCtrl.setActiveQuestionsList();
                   playerCtrl.actualRound = 0;
                   playerCtrl.resetIndex();
-                  Navigator.pushNamed(context, "game");
+                  Get.to(() => const GameView(),
+                      transition: Transition.upToDown);
                 },
           child: AnimatedGradientBorder(
             borderSize: 2,
