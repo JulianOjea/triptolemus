@@ -7,7 +7,7 @@ import 'package:triptolemus/controllers/questions_controller.dart';
 import 'package:triptolemus/views/game_view.dart';
 
 class ConfigPlayButton extends StatelessWidget {
-  final questionCtrl = Get.find<QuestionController>();
+  final questionCtrl = Get.find<GameController>();
   final playerCtrl = Get.find<PlayerController>();
   ConfigPlayButton({super.key});
 

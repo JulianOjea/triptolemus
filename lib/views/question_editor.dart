@@ -27,7 +27,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
   final textController = TextEditingController();
   bool isEditing = false;
   var fieldvalue = "";
-  String selectedContainer = QuestionCategory.dilemas;
+  String selectedContainer = Category.dilemas;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final questionCtrl = Get.find<QuestionController>();
+    final questionCtrl = Get.find<GameController>();
 
     return KeyboardDetection(
       controller: KeyboardDetectionController(onChanged: (value) {
@@ -103,9 +103,9 @@ class _QuestionEditorState extends State<QuestionEditor> {
     return Container(
       child: Column(
         children: [
-          containerSelector(QuestionCategory.dilemas, '🤔'),
-          containerSelector(QuestionCategory.picante, '👻'),
-          containerSelector(QuestionCategory.confidenciales, '😱'),
+          containerSelector(Category.dilemas, '🤔'),
+          containerSelector(Category.picante, '👻'),
+          containerSelector(Category.confidenciales, '😱'),
         ],
       ),
     );
@@ -181,7 +181,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
   }
 
   SizedBox confirmButton(
-      QuestionController questionCtrl, TextEditingController textController) {
+      GameController questionCtrl, TextEditingController textController) {
     return SizedBox(
       height: 60.0,
       width: 60.0,

@@ -7,14 +7,17 @@ import 'package:sqflite/sqflite.dart';
 import 'package:triptolemus/data/questions.dart';
 import 'package:triptolemus/models/category.dart';
 import 'package:triptolemus/models/question.dart';
+import 'package:triptolemus/services/category_service.dart';
 
-class QuestionController extends GetxController {
-  var categories = [
-    QuestionCategory(QuestionCategory.dilemas, true),
-    QuestionCategory(QuestionCategory.picante, false),
-    QuestionCategory(QuestionCategory.confidenciales, false),
-    QuestionCategory(QuestionCategory.personalizadas, false)
-  ].obs;
+class GameController extends GetxController {
+  // var categories = [
+  //   Category(Category.dilemas, true, '🤔'),
+  //   Category(Category.picante, false, '👻'),
+  //   Category(Category.confidenciales, false, '😱')
+  //   //QuestionCategory(QuestionCategory.personalizadas, false, '🤯')
+  // ].obs;
+
+  var categories = <Category>[].obs;
 
   //List of questions
   var activeQuestions = [].obs;
@@ -23,7 +26,22 @@ class QuestionController extends GetxController {
   var customQuestionList = [].obs;
 
   // custom question switch state
-  var insertQustomCuestion = false.obs;
+  //var insertQustomCuestion = false.obs;
+
+  Future<void> fetchCategories() async {
+    try {
+      final fetchedCategories = await CategoryService.fetchCategories();
+      categories.assignAll(fetchedCategories);
+    } catch (e) {
+      throw Exception('Unexpected error getting category');
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchCategories();
+  }
 
   set database(Future<Database> database) {}
 
@@ -33,6 +51,7 @@ class QuestionController extends GetxController {
     return question.text.replaceAll("%name%", name).replaceAll('😏', name);
   }
 
+// TODO: this refactor
   Future setActiveQuestionsList() async {
     if (customQuestionList.isEmpty) {
       var qlist = await getQuestionsListOnDB();
@@ -41,49 +60,51 @@ class QuestionController extends GetxController {
 
     activeQuestions.clear();
     if (categories[3].isActive) {
+      // TODO CHANGE THIS LOGIC
       activeQuestions.addAll(customQuestionList);
     } else {
       categories.where((qc) => qc.isActive).forEach((element) {
         activeQuestions.addAll(getQuestionsByCategory(element));
-        if (insertQustomCuestion.value) {
-          var matchlist = customQuestionList
-              .where((customQ) => customQ.category == element.value)
-              .toList();
+        // if (insertQustomCuestion.value) {
+        //   var matchlist = customQuestionList
+        //       .where((customQ) => customQ.category == element.value)
+        //       .toList();
 
-          activeQuestions.addAll(matchlist);
-        }
+        //   activeQuestions.addAll(matchlist);
+        // }
       });
     }
 
     activeQuestions.refresh();
   }
 
-  List<Question> getQuestionsByCategory(QuestionCategory qc) {
+  List<Question> getQuestionsByCategory(Category qc) {
     return Questions.questionList
         .where((element) => element.category == qc.value)
         .toList();
   }
 
-  void addActiveCategory(QuestionCategory category) {
+  void addActiveCategory(Category category) {
     categories.add(category);
   }
 
-  QuestionCategory getCategoryByName(String cat) {
+  Category getCategoryByName(String cat) {
     return categories.firstWhere((qcat) => qcat.value == cat);
   }
 
-  void swichActive(QuestionCategory cat) {
-    QuestionCategory qc = getCategoryByName(cat.value);
+  void swichActive(Category cat) {
+    Category qc = getCategoryByName(cat.value);
     qc.isActive = !qc.isActive;
 
-    if (cat.value == QuestionCategory.personalizadas) {
-      categories[0].isActive = false;
-      categories[1].isActive = false;
-      categories[2].isActive = false;
-      insertQustomCuestion.value = true;
-    } else {
-      categories[3].isActive = false;
-    }
+    // Esto era la antigua manera de cargar personalizadas
+    // if (cat.value == Category.personalizadas) {
+    //   categories[0].isActive = false;
+    //   categories[1].isActive = false;
+    //   categories[2].isActive = false;
+    // } else {
+    //   categories[3].isActive = false;
+    // }
+
     categories.refresh();
   }
 
@@ -91,11 +112,9 @@ class QuestionController extends GetxController {
     customQuestionList.add(Question(questionText, qc, isCustom: true));
   }
 
+  // TODO ESTA FUNCION YA NO SIRVE
   bool isAnyCatSelected() {
-    return categories[0].isActive ||
-        categories[1].isActive ||
-        categories[2].isActive ||
-        categories[3].isActive;
+    return categories[0].isActive || categories[1].isActive;
   }
 
   Future<Database> initQuestionDB() async {

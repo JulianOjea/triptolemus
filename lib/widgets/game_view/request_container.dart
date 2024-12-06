@@ -27,7 +27,7 @@ class _RequestContainerState extends State<RequestContainer>
   late AnimationController _animationCtrlEnd;
 
   final playerCrtl = Get.find<PlayerController>();
-  final questionCrtl = Get.find<QuestionController>();
+  final questionCrtl = Get.find<GameController>();
   late String questionText;
   var _isAnimating = false;
 
@@ -75,7 +75,7 @@ class _RequestContainerState extends State<RequestContainer>
     );
   }
 
-  Animate animatedContainer(QuestionController questionCrtl,
+  Animate animatedContainer(GameController questionCrtl,
       PlayerController playerCrtl, AnimationController animationCtrl) {
     return Container(
       decoration: BoxDecoration(

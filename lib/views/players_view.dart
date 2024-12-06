@@ -23,7 +23,7 @@ class _PlayersViewState extends State<PlayersView> {
 
   //TODO MAYBE YOU CAN DO LAZY PUT HERE
   //TODO ON HIDE EDIT NEEDS TO BE IMPROVED
-  final questionCtrl = Get.find<QuestionController>();
+  final questionCtrl = Get.find<GameController>();
   final playerCtrl = Get.find<PlayerController>();
 
   @override

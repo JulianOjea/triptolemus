@@ -35,7 +35,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
 
   @override
   Widget build(BuildContext context) {
-    final questionCtrl = Get.find<QuestionController>();
+    final gameCtrl = Get.find<GameController>();
     final playerController = Get.find<PlayerController>();
 
     TextEditingController textController = TextEditingController();
@@ -73,13 +73,9 @@ class _ConfigurationViewState extends State<ConfigurationView>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(
-                        height: 50,
-                      ),
-                      customSelector(questionCtrl),
-                      const SizedBox(
                         height: 20,
                       ),
-                      categoryBoxSelectors(questionCtrl),
+                      categoryBoxSelectors(gameCtrl),
                     ],
                   ),
                   Column(
@@ -140,7 +136,7 @@ class _ConfigurationViewState extends State<ConfigurationView>
     );
   }
 
-  Column categoryBoxSelectors(QuestionController questionCtrl) {
+  Column categoryBoxSelectors(GameController gameCtrl) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -155,41 +151,44 @@ class _ConfigurationViewState extends State<ConfigurationView>
           ),
         ),
         const SizedBox(height: 25),
-        CategorySelector(emoji: '🤔', category: questionCtrl.categories[0]),
-        CategorySelector(emoji: '😱', category: questionCtrl.categories[2]),
-        CategorySelector(emoji: '👻', category: questionCtrl.categories[1]),
-        CategorySelector(emoji: '🤯', category: questionCtrl.categories[3]),
+        ...getSelectors(gameCtrl),
         const SizedBox(height: 25),
       ],
     );
   }
 
-  Column customSelector(QuestionController questionCtrl) {
-    return Column(
-      children: [
-        const Center(
-          child: Text(
-            "¿Quieres jugar con tus preguntas personalizadas?",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: AppColor.contrast,
-                fontSize: 25,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        Obx(() => Switch(
-              inactiveThumbColor: AppColor.secondary,
-              inactiveTrackColor: AppColor.primary,
-              value: questionCtrl.insertQustomCuestion.value,
-              activeColor: AppColor.primary,
-              onChanged: (bool value) {
-                questionCtrl.insertQustomCuestion.value = value;
-              },
-            )),
-        const SizedBox(height: 25),
-      ],
-    );
+  List<CategorySelector> getSelectors(GameController gameCtrl) {
+    return gameCtrl.categories.map((c) {
+      return CategorySelector(category: c);
+    }).toList();
   }
+
+  // Column customSelector(QuestionController gameCtrl) {
+  //   return Column(
+  //     children: [
+  //       const Center(
+  //         child: Text(
+  //           "¿Quieres jugar con tus preguntas personalizadas?",
+  //           textAlign: TextAlign.center,
+  //           style: TextStyle(
+  //               color: AppColor.contrast,
+  //               fontSize: 25,
+  //               fontWeight: FontWeight.bold),
+  //         ),
+  //       ),
+  //       Obx(() => Switch(
+  //             inactiveThumbColor: AppColor.secondary,
+  //             inactiveTrackColor: AppColor.primary,
+  //             value: gameCtrl.insertQustomCuestion.value,
+  //             activeColor: AppColor.primary,
+  //             onChanged: (bool value) {
+  //               gameCtrl.insertQustomCuestion.value = value;
+  //             },
+  //           )),
+  //       const SizedBox(height: 25),
+  //     ],
+  //   );
+  // }
 
   Column nRoundSelector(
       TextEditingController textController, PlayerController playerController) {

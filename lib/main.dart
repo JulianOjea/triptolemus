@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+
 import 'package:triptolemus/views/configuration_view.dart';
 import 'package:triptolemus/views/custom_question_view.dart';
 import 'package:triptolemus/views/game_view.dart';
@@ -7,7 +8,7 @@ import 'package:triptolemus/views/home_page_view.dart';
 import 'package:triptolemus/views/players_view.dart';
 import 'package:triptolemus/views/question_editor.dart';
 
-void main() {
+void main() async {
   runApp(const MainApp());
 }
 

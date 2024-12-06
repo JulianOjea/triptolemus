@@ -9,7 +9,7 @@ import 'package:triptolemus/widgets/home_view/home_to_custom_question_button.dar
 class HomePageView extends StatelessWidget {
   HomePageView({super.key});
 
-  final questionCtrl = Get.put(QuestionController());
+  final questionCtrl = Get.put(GameController());
   final playerCtrl = Get.put(PlayerController());
 
   @override

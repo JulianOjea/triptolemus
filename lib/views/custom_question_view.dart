@@ -14,7 +14,7 @@ class CustomQuestionView extends StatefulWidget {
 }
 
 class _CustomQuestionViewState extends State<CustomQuestionView> {
-  final questionCtrl = Get.find<QuestionController>();
+  final questionCtrl = Get.find<GameController>();
 
   late List<Question> qlist;
 
