@@ -1,25 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Category {
-  final String value;
+  final int id;
+  final String name;
+  final String emoji;
   bool isActive;
-  String emoji;
 
-  Category(this.value, this.isActive, this.emoji);
-
-  static const String picante = "Picante";
-  static const String dilemas = "Dilemas";
-  static const String confidenciales = "Confidenciales";
-  static const String personalizadas = "Personalizadas";
+  Category(
+      {required this.id,
+      required this.name,
+      required this.emoji,
+      this.isActive = false});
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      json['name'],
-      false,
-      json['icon'],
+      id: json['id'],
+      name: json['name'],
+      emoji: json['icon'],
     );
   }
 
   @override
   String toString() {
-    return 'QuestionCategory(value: $value, isActive: $isActive, emoji: $emoji)';
+    return 'Category(id: $id, name: $name, emoji: $emoji, isActive: $isActive)';
   }
 }

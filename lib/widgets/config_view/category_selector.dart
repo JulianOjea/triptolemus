@@ -30,7 +30,7 @@ class CategorySelector extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 gradientColors:
                     //set active hightlight
-                    gameCtrl.getCategoryByName(category.value).isActive
+                    gameCtrl.getCategoryByName(category.name).isActive
                         ? const [
                             Colors.transparent,
                             Colors.transparent,
@@ -47,7 +47,7 @@ class CategorySelector extends StatelessWidget {
                 child: Container(
                   height: 40,
                   decoration: BoxDecoration(
-                      color: gameCtrl.getCategoryByName(category.value).isActive
+                      color: gameCtrl.getCategoryByName(category.name).isActive
                           ? AppColor.primary
                           : AppColor.secondary,
                       borderRadius: const BorderRadius.only(
@@ -72,7 +72,7 @@ class CategorySelector extends StatelessWidget {
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          category.value,
+                          category.name,
                           // category.value != Category.personalizadas
                           //     ? category.value
                           //     //TODO QUITAR ESTO QUE ES DE UNA ITERACION ANTERIOR Y YA NO SIRVE XD

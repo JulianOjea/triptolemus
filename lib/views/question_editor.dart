@@ -27,7 +27,8 @@ class _QuestionEditorState extends State<QuestionEditor> {
   final textController = TextEditingController();
   bool isEditing = false;
   var fieldvalue = "";
-  String selectedContainer = Category.dilemas;
+  //String selectedContainer = Category.dilemas;
+  String selectedContainer = "TODO";
 
   @override
   void initState() {
@@ -67,7 +68,8 @@ class _QuestionEditorState extends State<QuestionEditor> {
                     color: AppColor.contrast,
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      questionCtrl.deleteQuestion(widget.questionId);
+                      //TODO
+                      //questionCtrl.deleteQuestion(widget.questionId);
                       Get.back(result: true);
                     },
                   )
@@ -103,9 +105,10 @@ class _QuestionEditorState extends State<QuestionEditor> {
     return Container(
       child: Column(
         children: [
-          containerSelector(Category.dilemas, '🤔'),
-          containerSelector(Category.picante, '👻'),
-          containerSelector(Category.confidenciales, '😱'),
+          //  TODO
+          // containerSelector(Category.dilemas, '🤔'),
+          // containerSelector(Category.picante, '👻'),
+          // containerSelector(Category.confidenciales, '😱'),
         ],
       ),
     );
@@ -199,22 +202,23 @@ class _QuestionEditorState extends State<QuestionEditor> {
             color: AppColor.contrast,
           ),
           onPressed: () async {
-            if (textController.text.isNotEmpty) {
-              if (widget.isCreating) {
-                // questionCtrl.addCustomQuestion(
-                //     textController.text, selectedContainer);
-                Question q = Question(textController.text, selectedContainer,
-                    isCustom: true);
-                questionCtrl.insertQuestionOnDB(q);
-              } else {
-                Question q = Question(textController.text, selectedContainer,
-                    isCustom: true, questionId: widget.questionId);
-                await questionCtrl.updateQuestion(q);
-              }
-            } else {
-              //TODO DO SOMETHING WHEN IS EMPTY
-            }
-            Get.back(result: true);
+            // TODO
+            // if (textController.text.isNotEmpty) {
+            //   if (widget.isCreating) {
+            //     // questionCtrl.addCustomQuestion(
+            //     //     textController.text, selectedContainer);
+            //     Question q = Question(textController.text, selectedContainer,
+            //         isCustom: true);
+            //     questionCtrl.insertQuestionOnDB(q);
+            //   } else {
+            //     Question q = Question(textController.text, selectedContainer,
+            //         isCustom: true, questionId: widget.questionId);
+            //     await questionCtrl.updateQuestion(q);
+            //   }
+            // } else {
+            //   //TODO DO SOMETHING WHEN IS EMPTY
+            // }
+            // Get.back(result: true);
           }),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
-import 'package:triptolemus/constants/uris.dart';
 import 'dart:convert';
 
+import 'package:triptolemus/constants/uris.dart';
 import 'package:triptolemus/models/category.dart';
 
 class CategoryService {

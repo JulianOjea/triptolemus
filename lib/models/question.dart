@@ -1,22 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Question {
-  int? questionId;
+  final int questionId;
   final String text;
-  final String category;
+  final int categoryId;
   final bool isCustom;
 
   set text(String text) => this.text = text;
-  Question(this.text, this.category, {this.isCustom = false, this.questionId});
 
+  Question(
+      {required this.questionId,
+      required this.text,
+      required this.categoryId,
+      this.isCustom = false});
+
+  factory Question.fromJson(Map<String, dynamic> json) {
+    return Question(
+        questionId: json['id'],
+        text: json['text'],
+        categoryId: json['category_id']);
+  }
+
+  //TODO ??
+  //Esto se usaba para insertar en base de datos
   Map<String, Object?> toMap() {
     return {
       'rowid': questionId,
       'text_column': text,
-      'category': category,
     };
   }
 
   @override
   String toString() {
-    return 'Question{id: $questionId text: $text, category: $category, isCustom: $isCustom}';
+    return 'Question(questionId: $questionId, text: $text, categoryId: $categoryId, isCustom: $isCustom)';
   }
 }

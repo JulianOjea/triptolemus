@@ -19,7 +19,9 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
   late List<Question> qlist;
 
   getQuestions() async {
-    qlist = await questionCtrl.getQuestionsListOnDB();
+    //TODO
+    //qlist = await questionCtrl.getQuestionsListOnDB();
+    qlist = [];
     questionCtrl.customQuestionList.clear();
     questionCtrl.customQuestionList.addAll(qlist);
   }
@@ -105,7 +107,9 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
           () => QuestionEditor(
             isCreating: false,
             questionText: question.text,
-            category: question.category,
+            //TODO
+            //category: question.category,
+            category: "TODO: CUSTOM_QUESTION_VIEW",
             questionId: question.questionId!,
           ),
         );
