@@ -53,14 +53,14 @@ class GameController extends GetxController {
 
   Future<void> initQuestionDB() async {
     try {
-      QuestionRepository.initDB();
+      await QuestionRepository.initDB();
       var questionCount = await QuestionRepository.getQuestionCount();
       print("This is the amount of questions: $questionCount");
       // If data base is empty fetch questions from internet
       if (questionCount == 0) {
         print("Inserting questions on db");
         List<Question> questionList = await fetchQuestions();
-        QuestionRepository.insertQuestionListOnDB(questionList);
+        await QuestionRepository.insertQuestionListOnDB(questionList);
       }
     } catch (e) {
       throw Exception('Error getting question db');
@@ -69,14 +69,14 @@ class GameController extends GetxController {
 
   Future<void> initCategoryDB() async {
     try {
-      CategoryRepository.initDB();
+      await CategoryRepository.initDB();
       var categoryCount = await CategoryRepository.getCategoryCount();
       print("This is the amount of categories: $categoryCount");
       // If data base is empty fetch categories from internet
       if (categoryCount == 0) {
         print("Inserting categories on db");
         List<Category> categoryList = await fetchCategories();
-        CategoryRepository.insertCategoryListOnDB(categoryList);
+        await CategoryRepository.insertCategoryListOnDB(categoryList);
       }
     } catch (e) {
       throw Exception('Error getting category db');
@@ -97,15 +97,24 @@ class GameController extends GetxController {
     print("Size of category List: ${categories.length}");
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-    //First initialize db if needed: fetch if needed + save on db if needed
-    initQuestionDB();
-    initQuestionList();
+  Future<void> initializeApp() async {
+    try {
+      //First initialize db if needed: fetch if needed + save on db if needed
+      await initQuestionDB();
+      await initQuestionList();
 
-    initCategoryDB();
-    initCategoryList();
+      await initCategoryDB();
+      await initCategoryList();
+    } catch (e) {
+      print("Error during initialization: $e");
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    initializeApp();
   }
 
   set database(Future<Database> database) {}
