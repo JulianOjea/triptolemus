@@ -23,4 +23,16 @@ class Category {
   String toString() {
     return 'Category(id: $id, name: $name, emoji: $emoji, isActive: $isActive)';
   }
+
+  Map<String, Object?> toMap() {
+    return {'id': id, 'name': name, 'icon': emoji};
+  }
+
+  factory Category.fromMap(Map<String, Object?> map) {
+    return Category(
+      id: map['id'] as int,
+      name: map['name'] as String,
+      emoji: map['icon'] as String,
+    );
+  }
 }

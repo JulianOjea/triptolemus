@@ -7,6 +7,8 @@ import 'package:triptolemus/models/question.dart';
 
 import 'package:triptolemus/services/api/category_service.dart';
 import 'package:triptolemus/services/api/question_service.dart';
+import 'package:triptolemus/services/db/category_repository.dart';
+import 'package:triptolemus/services/db/question_repository.dart';
 
 class GameController extends GetxController {
   // var categories = [
@@ -19,40 +21,91 @@ class GameController extends GetxController {
   var categories = <Category>[].obs;
 
   //List of questions
-  var questionList = [].obs;
+  var questionList = <Question>[].obs;
 
   //List of active questions
-  var activeQuestions = [].obs;
+  var activeQuestions = <Question>[].obs;
 
   //List of custom questions
-  var customQuestionList = [].obs;
+  var customQuestionList = <Question>[].obs;
 
   // custom question switch state
   //var insertQustomCuestion = false.obs;
 
-  Future<void> fetchCategories() async {
+  Future<List<Category>> fetchCategories() async {
     try {
-      final fetchedCategories = await CategoryService.fetchCategories();
-      categories.assignAll(fetchedCategories);
+      List<Category> fetchedCategories =
+          await CategoryService.fetchCategories();
+      return fetchedCategories;
     } catch (e) {
       throw Exception('Unexpected error getting category');
     }
   }
 
-  Future<void> fetchQuestions() async {
+  Future<List<Question>> fetchQuestions() async {
     try {
-      final fetchedQuestions = await QuestionService.fetchQuestions();
-      questionList.assignAll(fetchedQuestions);
+      List<Question> fetchedQuestions = await QuestionService.fetchQuestions();
+      return fetchedQuestions;
     } catch (e) {
-      throw Exception('Unexpected error getting question');
+      throw Exception('Unexpected error fetching questions from internet');
     }
   }
 
+  Future<void> initQuestionDB() async {
+    try {
+      QuestionRepository.initDB();
+      var questionCount = await QuestionRepository.getQuestionCount();
+      print("This is the amount of questions: $questionCount");
+      // If data base is empty fetch questions from internet
+      if (questionCount == 0) {
+        print("Inserting questions on db");
+        List<Question> questionList = await fetchQuestions();
+        QuestionRepository.insertQuestionListOnDB(questionList);
+      }
+    } catch (e) {
+      throw Exception('Error getting question db');
+    }
+  }
+
+  Future<void> initCategoryDB() async {
+    try {
+      CategoryRepository.initDB();
+      var categoryCount = await CategoryRepository.getCategoryCount();
+      print("This is the amount of categories: $categoryCount");
+      // If data base is empty fetch categories from internet
+      if (categoryCount == 0) {
+        print("Inserting categories on db");
+        List<Category> categoryList = await fetchCategories();
+        CategoryRepository.insertCategoryListOnDB(categoryList);
+      }
+    } catch (e) {
+      throw Exception('Error getting category db');
+    }
+  }
+
+  Future<void> initQuestionList() async {
+    print("adding questions to list from db");
+    List<Question> dbQuestionList = await QuestionRepository.getQuestionList();
+    questionList.assignAll(dbQuestionList);
+    print("Size of question List: ${questionList.length}");
+  }
+
+  Future<void> initCategoryList() async {
+    print("adding category to list from db");
+    List<Category> dbCategoryList = await CategoryRepository.getCategoryList();
+    categories.assignAll(dbCategoryList);
+    print("Size of category List: ${categories.length}");
+  }
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    fetchCategories();
-    fetchQuestions();
+    //First initialize db if needed: fetch if needed + save on db if needed
+    initQuestionDB();
+    initQuestionList();
+
+    initCategoryDB();
+    initCategoryList();
   }
 
   set database(Future<Database> database) {}
@@ -111,6 +164,8 @@ class GameController extends GetxController {
 
   // TODO ESTA FUNCION YA NO SIRVE
   bool isAnyCatSelected() {
-    return categories[0].isActive || categories[1].isActive;
+    return categories[0].isActive ||
+        categories[1].isActive ||
+        categories[2].isActive;
   }
 }

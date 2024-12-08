@@ -23,10 +23,15 @@ class Question {
   //TODO ??
   //Esto se usaba para insertar en base de datos
   Map<String, Object?> toMap() {
-    return {
-      'rowid': questionId,
-      'text_column': text,
-    };
+    return {'id': questionId, 'text': text, 'category_id': categoryId};
+  }
+
+  factory Question.fromMap(Map<String, Object?> map) {
+    return Question(
+      questionId: map['id'] as int,
+      text: map['text'] as String,
+      categoryId: map['category_id'] as int,
+    );
   }
 
   @override
