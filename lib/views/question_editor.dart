@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:keyboard_detection/keyboard_detection.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
-import 'package:triptolemus/models/category.dart';
-import 'package:triptolemus/models/question.dart';
 
 class QuestionEditor extends StatefulWidget {
   final bool isCreating;
@@ -103,7 +101,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
 
   Container categorySelector() {
     return Container(
-      child: Column(
+      child: const Column(
         children: [
           //  TODO
           // containerSelector(Category.dilemas, '🤔'),
@@ -114,30 +112,30 @@ class _QuestionEditorState extends State<QuestionEditor> {
     );
   }
 
-  GestureDetector containerSelector(container_text, emoji) {
+  GestureDetector containerSelector(containerText, emoji) {
     return GestureDetector(
       onTap: () {
-        selectedContainer = container_text;
+        selectedContainer = containerText;
         setState(() {});
       },
       child: Container(
-        margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 5.0),
+        margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 5.0),
         height: 60,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: selectedContainer == container_text
+            color: selectedContainer == containerText
                 ? AppColor.primary
                 : AppColor.secondary,
             borderRadius: const BorderRadius.all(Radius.circular(5))),
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsetsDirectional.only(start: 5.0),
+              margin: const EdgeInsetsDirectional.only(start: 5.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   emoji,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 29,
                       fontWeight: FontWeight.bold,
                       color: AppColor.contrast),
@@ -147,8 +145,8 @@ class _QuestionEditorState extends State<QuestionEditor> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                container_text,
-                style: TextStyle(
+                containerText,
+                style: const TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.bold,
                     color: AppColor.contrast),
@@ -237,7 +235,7 @@ class _QuestionEditorState extends State<QuestionEditor> {
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
           ),
-          style: TextStyle(fontSize: 17, color: AppColor.contrast),
+          style: const TextStyle(fontSize: 17, color: AppColor.contrast),
           keyboardType: TextInputType.multiline,
           maxLines: 5,
         ),

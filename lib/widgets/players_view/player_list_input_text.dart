@@ -55,7 +55,7 @@ class PlayerListInputText extends StatelessWidget {
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
             hintText: 'Escribe un nombre',
-            hintStyle: TextStyle(color: AppColor.contrast)),
+            hintStyle: const TextStyle(color: AppColor.contrast)),
       ),
     )
         .animate()

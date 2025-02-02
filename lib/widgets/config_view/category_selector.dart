@@ -60,7 +60,7 @@ class CategorySelector extends StatelessWidget {
                     children: [
                       //emoji container
                       Container(
-                        margin: EdgeInsetsDirectional.only(start: 5.0),
+                        margin: const EdgeInsetsDirectional.only(start: 5.0),
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(

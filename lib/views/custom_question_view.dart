@@ -4,7 +4,6 @@ import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/questions_controller.dart';
 import 'package:triptolemus/models/question.dart';
 import 'package:triptolemus/views/question_editor.dart';
-import 'package:triptolemus/widgets/custom_question_view/question_container.dart';
 
 class CustomQuestionView extends StatefulWidget {
   const CustomQuestionView({super.key});
@@ -45,7 +44,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
         future: getQuestions(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else {
             return Column(
               children: [
@@ -66,7 +65,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
                 Container(
                   margin: const EdgeInsets.all(10),
                   alignment: Alignment.bottomRight,
-                  child: Container(
+                  child: SizedBox(
                     height: 60.0,
                     width: 60.0,
                     child: ElevatedButton(
@@ -83,7 +82,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
                           borderRadius: BorderRadius.circular(
                               10.0), // Personaliza el radio según tus necesidades
                         ),
-                        padding: EdgeInsets.all(0), // Ajusta el padding a 0
+                        padding: const EdgeInsets.all(0), // Ajusta el padding a 0
                       ),
                       child: const Icon(
                         Icons.add,
@@ -110,7 +109,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
             //TODO
             //category: question.category,
             category: "TODO: CUSTOM_QUESTION_VIEW",
-            questionId: question.questionId!,
+            questionId: question.questionId,
           ),
         );
 
@@ -120,7 +119,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
       },
       child: Container(
         color: AppColor.background,
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         height: 40,
         alignment: Alignment.centerLeft,
         child: Text(

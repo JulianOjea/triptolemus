@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_detection/keyboard_detection.dart';
@@ -75,7 +74,7 @@ class _PlayersViewState extends State<PlayersView> {
                       return Container();
                     } else {
                       if (_isGoToConfigVisible) {
-                        return PlayButton();
+                        return const PlayButton();
                       } else {
                         return Container();
                       }

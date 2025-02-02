@@ -6,7 +6,7 @@ import 'package:triptolemus/models/category.dart';
 
 class CategoryService {
   static Future<List<Category>> fetchCategories() async {
-    print("FETCHING CATEGORIES" + DateTime.now().toString());
+    print("FETCHING CATEGORIES${DateTime.now()}");
     try {
       final response = await http.get(Uri.parse(AppUri.categoryEndpoint));
 

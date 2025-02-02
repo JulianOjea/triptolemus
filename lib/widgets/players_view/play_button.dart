@@ -4,10 +4,9 @@ import 'package:get/get.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/controllers/player_controller.dart';
 import 'package:triptolemus/views/configuration_view.dart';
-import 'package:triptolemus/widgets/players_view/player_list_input_text.dart';
 
 class PlayButton extends StatelessWidget {
-  PlayButton({super.key});
+  const PlayButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class PlayButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           playerCtrl.resetIndex();
-          Get.to(() => ConfigurationView(), transition: Transition.rightToLeft);
+          Get.to(() => const ConfigurationView(), transition: Transition.rightToLeft);
         },
         child: Container(
           decoration: const BoxDecoration(

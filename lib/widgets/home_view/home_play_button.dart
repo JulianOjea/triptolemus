@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glowy_borders/glowy_borders.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:triptolemus/constants/colors.dart';
 import 'package:triptolemus/views/players_view.dart';
 

@@ -6,7 +6,7 @@ import 'package:triptolemus/constants/uris.dart';
 
 class QuestionService {
   static Future<List<Question>> fetchQuestions() async {
-    print("FETCHING QUESTIONS" + DateTime.now().toString());
+    print("FETCHING QUESTIONS${DateTime.now()}");
     try {
       final response = await http.get(Uri.parse(AppUri.questionEndpoint));
 

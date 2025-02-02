@@ -99,7 +99,8 @@ class GameController extends GetxController {
 
   Future<void> initializeApp() async {
     try {
-      //First initialize db if needed: fetch if needed + save on db if needed
+      //First initialize db if n
+      //eeded: fetch if needed + save on db if needed
       await initQuestionDB();
       await initQuestionList();
 
