@@ -54,4 +54,9 @@ class CategoryRepository {
       for (final map in categoryMaps) Category.fromMap(map),
     ];
   }
+
+  static Future<void> clearDatabase() async {
+    Database db = await _openDB();
+    await db.delete(Query.categoryTable);
+  }
 }

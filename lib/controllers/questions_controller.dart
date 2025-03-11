@@ -11,13 +11,6 @@ import 'package:triptolemus/services/db/category_repository.dart';
 import 'package:triptolemus/services/db/question_repository.dart';
 
 class GameController extends GetxController {
-  // var categories = [
-  //   Category(Category.dilemas, true, '🤔'),
-  //   Category(Category.picante, false, '👻'),
-  //   Category(Category.confidenciales, false, '😱')
-  //   //QuestionCategory(QuestionCategory.personalizadas, false, '🤯')
-  // ].obs;
-
   var categories = <Category>[].obs;
 
   //List of questions
@@ -156,15 +149,6 @@ class GameController extends GetxController {
     Category qc = getCategoryByName(cat.name);
     qc.isActive = !qc.isActive;
 
-    // Esto era la antigua manera de cargar personalizadas
-    // if (cat.value == Category.personalizadas) {
-    //   categories[0].isActive = false;
-    //   categories[1].isActive = false;
-    //   categories[2].isActive = false;
-    // } else {
-    //   categories[3].isActive = false;
-    // }
-
     categories.refresh();
   }
 
@@ -173,6 +157,7 @@ class GameController extends GetxController {
   // }
 
   // TODO ESTA FUNCION YA NO SIRVE
+  //URGENTE REFACTOR ESTO INDEED NO SIRVE XD
   bool isAnyCatSelected() {
     return categories[0].isActive ||
         categories[1].isActive ||

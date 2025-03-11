@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "360360637260",
     "project_id": "triptolemuspushnotifications",
-    "storage_bucket": "triptolemuspushnotifications.firebasestorage.app"
+    "storage_bucket": "triptolemuspushnotifications.appspot.com"
   },
   "client": [
     {
