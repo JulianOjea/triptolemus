@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:triptolemus/controllers/language_controller.dart';
 
 import 'package:triptolemus/models/category.dart';
 import 'package:triptolemus/models/question.dart';
@@ -24,6 +25,7 @@ class GameController extends GetxController {
 
   // custom question switch state
   //var insertQustomCuestion = false.obs;
+  final langController = Get.put(LanguageController());
 
   Future<List<Category>> fetchCategories() async {
     try {
@@ -116,7 +118,14 @@ class GameController extends GetxController {
   String getQuestionString(String name) {
     final random = Random();
     Question question = activeQuestions[random.nextInt(activeQuestions.length)];
-    return question.text.replaceAll("%name%", name).replaceAll('😏', name);
+
+    String languageCode = langController.locale.value.languageCode;
+
+    if (languageCode == 'en') {
+      return question.textEng.replaceAll("%name%", name).replaceAll('😏', name);
+    } else {
+      return question.textEs.replaceAll("%name%", name).replaceAll('😏', name);
+    }
   }
 
 // TODO: this refactor
@@ -156,11 +165,7 @@ class GameController extends GetxController {
   //   customQuestionList.add(Question(questionText, qc, isCustom: true));
   // }
 
-  // TODO ESTA FUNCION YA NO SIRVE
-  //URGENTE REFACTOR ESTO INDEED NO SIRVE XD
   bool isAnyCatSelected() {
-    return categories[0].isActive ||
-        categories[1].isActive ||
-        categories[2].isActive;
+    return categories.any((category) => category.isActive);
   }
 }

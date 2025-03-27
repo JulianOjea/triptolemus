@@ -23,10 +23,10 @@ class HomeCustomQuestionButton extends StatelessWidget {
             bottomRight: Radius.circular(5),
           ),
         ),
-        child: const Center(
+        child: Center(
             child: Text(
-          "Mis preguntas",
-          style: TextStyle(
+          'welcome'.tr,
+          style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               color: AppColor.contrast),

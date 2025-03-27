@@ -36,3 +36,5 @@ flutter:
   assets:
     - assets/test.jpeg
     - assets/logo1.jpeg
+    - assets/en.png
+    - assets/es.png

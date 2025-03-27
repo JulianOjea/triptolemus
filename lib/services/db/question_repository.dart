@@ -20,7 +20,7 @@ class QuestionRepository {
         print("creating Question db");
         return db.execute(Query.createQuestionTable);
       },
-      version: 1,
+      version: 2,
     );
   }
 
@@ -58,5 +58,8 @@ class QuestionRepository {
   static Future<void> clearDatabase() async {
     Database db = await _openDB();
     await db.delete(Query.questionTable);
+    String path = join(await getDatabasesPath(), Query.questionDB);
+    await deleteDatabase(path);
+    print("Base de datos eliminada");
   }
 }

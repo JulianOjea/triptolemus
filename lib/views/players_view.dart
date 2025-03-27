@@ -48,10 +48,10 @@ class _PlayersViewState extends State<PlayersView> {
           ),
           centerTitle: true,
           backgroundColor: AppColor.background,
-          title: const Text(
-            "Jugadores",
+          title: Text(
+            "players".tr,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
                 color: AppColor.contrast),
@@ -90,11 +90,11 @@ class _PlayersViewState extends State<PlayersView> {
   }
 
   Expanded placeholderNotEnoughPlayers() {
-    return const Expanded(
+    return Expanded(
         child: Center(
             child: Text(
-      "Añade 2 jugadores para jugar 😀",
-      style: TextStyle(
+      "Añade jugadores para jugar 😀".tr,
+      style: const TextStyle(
           fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.contrast),
     )));
   }
@@ -153,7 +153,7 @@ class _PlayersViewState extends State<PlayersView> {
           Flexible(
             child: MainInputText(
                 textController: mainTextController,
-                hintText: 'Escribe un nombre',
+                hintText: 'Escribe un nombre'.tr,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(5),

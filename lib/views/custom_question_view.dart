@@ -82,7 +82,8 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
                           borderRadius: BorderRadius.circular(
                               10.0), // Personaliza el radio según tus necesidades
                         ),
-                        padding: const EdgeInsets.all(0), // Ajusta el padding a 0
+                        padding:
+                            const EdgeInsets.all(0), // Ajusta el padding a 0
                       ),
                       child: const Icon(
                         Icons.add,
@@ -105,7 +106,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
         var result = await Get.to(
           () => QuestionEditor(
             isCreating: false,
-            questionText: question.text,
+            questionText: question.textEs,
             //TODO
             //category: question.category,
             category: "TODO: CUSTOM_QUESTION_VIEW",
@@ -123,7 +124,7 @@ class _CustomQuestionViewState extends State<CustomQuestionView> {
         height: 40,
         alignment: Alignment.centerLeft,
         child: Text(
-          question.text,
+          question.textEs,
           style: const TextStyle(fontSize: 20, color: AppColor.contrast),
         ),
       ),

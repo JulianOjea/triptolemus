@@ -2,7 +2,7 @@ class Query {
   static const String questionDB = 'question_database.db';
   static const String questionTable = 'questions';
   static const String createQuestionTable =
-      'CREATE TABLE $questionTable(id int, text text, category_id int)';
+      'CREATE TABLE $questionTable(id int, text_es text, text_eng text, category_id int)';
   static const String countQuestionsQuery = 'SELECT COUNT(*) FROM questions';
 
   static const String categoryDB = 'category_database.db';

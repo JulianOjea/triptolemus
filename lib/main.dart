@@ -1,12 +1,14 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:triptolemus/constants/shared_preferences_constants.dart';
+import 'package:triptolemus/controllers/language_controller.dart';
 import 'package:triptolemus/services/api/firebase_service.dart';
 import 'package:triptolemus/services/db/category_repository.dart';
 import 'package:triptolemus/services/db/question_repository.dart';
+import 'package:triptolemus/translations/translations.dart';
 
 import 'package:triptolemus/views/configuration_view.dart';
 import 'package:triptolemus/views/custom_question_view.dart';
@@ -48,6 +50,7 @@ Future<void> saveTokenOnDB() async {
 }
 
 void main() async {
+  Get.put(LanguageController());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -83,6 +86,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LanguageController langController = Get.find<LanguageController>();
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Chat App',
@@ -113,6 +118,8 @@ class MainApp extends StatelessWidget {
           page: () => const QuestionEditor(),
         )
       ],
+      locale: langController.locale.value,
+      translations: MyTranslations(),
     );
   }
 }
