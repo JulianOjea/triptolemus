@@ -63,7 +63,7 @@ class _RequestContainerState extends State<RequestContainer>
                       widget.animationTextCtrlEnd.reset();
                       widget.animationTextCtrl.forward();
                     } else {
-                      Navigator.pushNamed(context, "configuration");
+                      Navigator.pop(context);
                     }
                   }
                 : null,
